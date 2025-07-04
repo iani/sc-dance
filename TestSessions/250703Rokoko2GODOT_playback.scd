@@ -4,6 +4,8 @@
 
 //Set up a player to play back test data:
 //: Read all files from folder of session 250414_001919
+//!!!! Edit the path given in the string "/Users..." to match
+// the folder path of an existing recording session on your computer
 a = OscPlayer("/Users/iani/oscdata/250414_Nikopoulos_Rokoko/250414_001919/")
 //: play back entire session, looping forever:
 //and trace to watch what is being played
