@@ -5,6 +5,10 @@
 OscSequence {
 	var <times, <messages;
 	var <task;
+	var localAddr;
+	var <>sendLocal = false;
+
+	localAddr { ^localAddr ?? { localAddr = NetAddr.localAddr } }
 
 	*new { | times, messages |
 		^this.newCopyArgs(times, messages);
@@ -13,8 +17,13 @@ OscSequence {
 	play {
 		this.changed(\begin);
 		task = Task({
+			var message;
 			times.size do: { | i |
-				this.changed(\msg, i, messages[i]);
+				message = messages[i];
+				this.changed(\msg, i, message);
+				if (sendLocal) {
+					this.localAddr.sendMsg(*message);
+				};
 				((times[i + 1] ?? {
 					times[i] }) - times[i]
 				).wait;
@@ -27,10 +36,17 @@ OscSequence {
 	loop {
 		this.changed(\begin);
 		task = Task({
+			var message;
 			inf do: { | i |
 				this.changed(\loop, i);
 				times.size do: { | j |
-					this.changed(\msg, j, messages[j]);
+					message = messages[i];
+					this.changed(\msg, j, message);
+					if (sendLocal) {
+						// "sending".postln;
+						// message.postln;
+						this.localAddr.sendMsg(*message);
+					};
 					((times[j + 1] ?? {
 						times[j] }) - times[j]
 					).wait;

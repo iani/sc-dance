@@ -8,9 +8,9 @@
 // the folder path of an existing recording session on your computer
 ~dataFolder = "/Users/iani/oscdata/";
 ~dataFolder.folders do: _.postln;
-~sessionFolder = ~dataFolder.folders[2].fullPath;
+~sessionFolder = ~dataFolder.folders.first.fullPath;
 ~sessionFolder.folders do: { | f | f.folderName.postln };
-~session = ~sessionFolder.folders[2].fullPath;
+~session = ~sessionFolder.folders.first.fullPath;
 // note: on 土  5  7 2025 14:20 the first session folder showed a distorted movement
 // trying the second session folder:
 ~session.folderName.postln;
@@ -20,6 +20,7 @@
 ~sequence = ~player.loop.simpleTrace;
 ~sequence.simpleUntrace; // stop posting
 ~sequence.simpleTrace; // start posting again
+~sequence.inspect;
 //:Prototype for forwarding based on Notification
 //(Notification -> Adapter in this library, later).
 //:activate

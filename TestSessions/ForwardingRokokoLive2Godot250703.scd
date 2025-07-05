@@ -7,14 +7,22 @@ a = OscPlayer("/Users/iani/oscdata/250624/250624_182908/")
 b = a.loop.simpleTrace;
 b.simpleUntrace; // stop posting
 b.simpleTrace; // start posting again
+//:to use forwarder from local playback, send it to local address:
+b.sendLocal = true;
+b.sendLocal = false;
+//:
+OscControl.enable;
+OscControl.simpleTrace;
+OscControl.dontTrace;
+//:
 RokokoForwarder(\giorgos).addr = NetAddr("127.0.0.1", 22245);
 RokokoForwarder(\giorgos).enable;
 RokokoForwarder(\giorgos).disable;
 RokokoForwarder(\giorgos).msgCache;
 RokokoForwarder(\giorgos).msgCache.size
 RokokoForwarder(\giorgos).msgCache indexOf: \hip;
-RokokoForwarder(\giorgos).msgCache indexOf: \;
-RokokoForwarder(\giorgos).addFilter({ 0 }, \hip, 2);
+RokokoForwarder(\giorgos).msgCache indexOf: \chest;
+RokokoForwarder(\giorgos).addFilter({ 1 }, \hip, 2);
 RokokoForwarder(\giorgos).filters;
 // OscControl.enable;
 
