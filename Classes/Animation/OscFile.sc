@@ -39,4 +39,18 @@ OscFile {
 		};
 		post(".");
 	}
+	filterMessages { | keepMessage = '/rokoko/' |
+		// only keep messages that start with symbol matching keepMessage
+		var newEntries;
+		entries do: { | e | // explicitly coded select
+			e[1] = e[1].interpret;
+			// postln("entire message:" + e[1]);
+			// postln("key header:" + e[1][0]);
+			// postln("Is it keepMessage?" + (e[1][0] === keepMessage));
+			if (e[1][0] === keepMessage) {
+				newEntries = newEntries add: e;
+			}
+		};
+		entries = newEntries;
+	}
 }

@@ -30,13 +30,18 @@ OscPlayer {
 	readFiles {
 		oscFiles = filePaths collect: OscFile(_);
 		// oscFiles = oscFiles select: { | f | f.entries.size > 0 }
+		oscFiles do: { | f |
+			f.filterMessages('/rokoko/');
+			// "====== filtered entries are =========".postln;
+			// f.entries.postln;
+		};
 	}
 
 	makeTimesMessages {
 		oscFiles do: { | o |
 			o.entries do: { | e |
 				times = times add: e[0];
-				messages = messages add: e[1].interpret;
+				messages = messages add: e[1]; // .interpret;
 			};
 		}
 	}
