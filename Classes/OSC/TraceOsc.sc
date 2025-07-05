@@ -11,7 +11,7 @@ TraceOsc : NamedInstance {
 	disableOsc { this.disable }
 	enable { OscControl addDependant: this; }
 	disable { OscControl removeDependant: this; }
-	osc { | time, addr, msg |
+	update { | time, addr, msg |
 		if (excludeServerMessages and: {
 			excludedMessages includes: msg[0]
 		}) { 	//  skip excluded message

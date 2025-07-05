@@ -6,7 +6,7 @@
 //: Read all files from folder of session 250414_001919
 //!!!! Edit the path given in the string "/Users..." to match
 // the folder path of an existing recording session on your computer
-a = OscPlayer("/Users/iani/oscdata/250414_Nikopoulos_Rokoko/250414_001919/")
+a = OscPlayer("/Users/iani/oscdata/250414_Nikopoulos_Rokoko/250414_002557/")
 //: play back entire session, looping forever:
 //and trace to watch what is being played
 b = a.loop.simpleTrace;
@@ -24,12 +24,11 @@ b.simpleTrace; // start posting again
 //:first create addresses to listen to:
 ~rlisteners = [
 	//	NetAddr.localAddr,
-	// NetAddr("127.0.0.1", 22245),
+	NetAddr("127.0.0.1", 22245),
 	// NetAddr("200.", 22245)
 	// add remote addresses from mc later:
 	// NetAddr("...", ...),
 	// NetAddr("...", ...);
-
 ];
 //:Now use send to these addresses:
 \rokokoTest.addNotifier(b, \msg, { | n, i ... msg |
@@ -44,6 +43,10 @@ b.simpleTrace; // start posting again
 		a.sendMsg(*msg);
 	}
 });
+//:
+b.pause;
+//:
+b.resume;
 //:Now use send to these addresses:
 \rokokoTest.addNotifier(b, \msg, { | n, i ... msg |
 	var converted;

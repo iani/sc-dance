@@ -8,8 +8,14 @@ SimpleTrace {
 }
 
 + Object {
-	simpleTrace {
-		this.addDependant(SimpleTrace);
+	doTrace { this.simpleTrace(true) }
+	dontTrace { this.simpleTrace(false) }
+	simpleTrace { | add = true |
+		if (add) {
+			this.addDependant(SimpleTrace);
+		}{
+			this.removeDependant(SimpleTrace);
+		}
 	}
 
 	simpleUntrace {

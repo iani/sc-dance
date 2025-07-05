@@ -4,7 +4,7 @@
 
 OscSequence {
 	var <times, <messages;
-	var <routine;
+	var <task;
 
 	*new { | times, messages |
 		^this.newCopyArgs(times, messages);
@@ -12,7 +12,7 @@ OscSequence {
 
 	play {
 		this.changed(\begin);
-		routine = fork {
+		task = Task({
 			times.size do: { | i |
 				this.changed(\msg, i, messages[i]);
 				((times[i + 1] ?? {
@@ -20,12 +20,13 @@ OscSequence {
 				).wait;
 			};
 			this.changed(\end);
-		}
+		});
+		task.start;
 	}
 
 	loop {
 		this.changed(\begin);
-		routine = fork {
+		task = Task({
 			inf do: { | i |
 				this.changed(\loop, i);
 				times.size do: { | j |
@@ -35,8 +36,11 @@ OscSequence {
 					).wait;
 				}
 			}
-		}
+		});
+		task.start;
 	}
 
-	stop { routine.stop; }
+	pause { task.pause }
+	resume { task.resume }
+	stop { task.stop; }
 }

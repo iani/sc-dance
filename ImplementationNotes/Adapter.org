@@ -1,0 +1,154 @@
+#+title: sc-dance lib development: Adapter class
+
+* Naming discussion with chat gpt:
+
+#+begin_quote
+You're right to think carefully about class naming — it's not just about what *sounds* good but what will remain intuitive and maintainable over time. Let's look at both parts of your question: **1) help drafting the class**, and **2) evaluating the name choice tradeoffs**.
+
+---
+
+## 🧱 Part 1: Drafting the Class – `Adapter`
+
+Here's a simple implementation of an `Adapter` class in SuperCollider that listens for `\changed` messages from any object and evaluates a user-provided function:
+
+```supercollider
+Adapter {
+    var <>source, // the object to observe
+        <>func,   // function to evaluate on \changed
+        observer; // the object added as a dependor
+
+    *new { |source, func|
+        ^super.new.init(source, func)
+    }
+
+    init { |source, func|
+        this.source = source;
+        this.func = func;
+        observer = Object.new;
+
+        observer.changed = { |obj, what, args|
+            func.value(obj, what, args);
+        };
+
+        source.addDependant(observer);
+        ^this
+    }
+
+    remove {
+        source.removeDependant(observer);
+    }
+
+    // convenience: if garbage-collected, remove dependency
+    finalize {
+        this.remove;
+    }
+}
+```
+
+### ✅ Usage Example:
+
+```supercollider
+x = NodeProxy.audio(s, 1);
+a = Adapter(x, { |obj, what, args|
+    ("Object " ++ obj ++ " emitted " ++ what).postln;
+});
+
+x.changed(\volume);  // simulate a \changed message
+
+a.remove; // clean up
+```
+
+---
+
+## 🏷️ Part 2: Naming Preferences & Tradeoffs
+
+Here are the names you mentioned, with a ranking based on clarity, precision, and conciseness — and commentary tailored to your concern:
+
+| Rank | Name              | Pros                                       | Cons                                                                      |
+| ---- | ----------------- | ------------------------------------------ | ------------------------------------------------------------------------- |
+| 1    | **Adapter**       | ✅ Short, conventional, extensible, neutral | ❗ Generic, doesn’t say *what* it adapts                                   |
+| 2    | `ChangeAdapter`   | ✅ Slightly more specific                   | ❗ "Change" ≠ `\changed`, might be misread as data transformation          |
+| 3    | `FunctionAdapter` | ✅ Implies action via a function            | ❗ Misleading — you’re not adapting a function, but using one              |
+| 4    | `ChangeResponder` | ✅ Emphasizes the response side             | ❗ “Responder” suggests inheritance from GUI `Responder`, semantically off |
+| 5    | `ObserverAdapter` | ✅ Reflects Observer Pattern lingo          | ❗ You’re not adapting an observer; you're *being* the observer            |
+
+---
+
+## 💡 Insight on Naming Tradeoff: **Simplicity vs. Specificity**
+
+You nailed the key points already:
+
+- **`Adapter` is short and flexible**: Since you're not adapting a `function`, a `change`, or an `observer`, but rather *connecting an object’s internal event system to a user-defined response*, `Adapter` serves as a concise term that doesn't over-specify or nil.
+
+- *Longer names aren't more precise**: As you rightly said, names like `ChangeAdapter` or `FunctionAdapter` may give a *false sense* of specificity — they suggest a clarity that doesn't fully match the class’s behavior. In contrast, a short name like `Adapter` signals a general-purpose utility and avoids implying incorrect semantics.
+
+- **In context, Adapter can gain clarity**: If this class is part of a cohesive framework or namespace (e.g., `MyLib::Adapter`, or used consistently across a codebase), its role becomes obvious *through usage*, not length.
+
+---
+
+## ✅ Final Recommendation
+
+Stick with **`Adapter`**. It’s simple, idiomatic, and avoids misleading specificity. If needed, add clarity in the documentation:
+
+```supercollider
+/// Adapter connects an object's \changed messages to a user-defined function.
+/// It observes any object supporting the dependency mechanism (addDependant),
+/// and triggers the function whenever the object emits a \changed event.
+```
+
+Would you like to explore adding options like filtering by specific keys (e.g., only respond to `\volume`) or auto-cleanup behavior?
+#+end_quote
+
+* previous dialog with chat-gpt
+
+
+#+begin_quote
+In SuperCollider sclang, when naming a new Class whose purpose is to respond to \changed messages emitted from any object by evaluating a function given by the user, which name would be more correct to use: Adapter or Adaptor. Comment on the difference in meaning and usage between  the spellings Adapter and Adaptor
+#+end_quote
+
+#+begin_quote
+In **SuperCollider sclang** or any programming context, when naming a class that responds to `\changed` messages by evaluating a user-provided function, **`Adapter`** is the more common and widely accepted spelling, especially in programming.
+
+---
+
+### ✅ Recommended Name: **`Adapter`**
+
+#### Why:
+
+- **"Adapter"** is the **standard spelling in software engineering**, especially for design patterns.
+- It corresponds to the well-known **Adapter Pattern** in object-oriented programming, which **wraps one interface and translates it into another** — similar to what your class seems to be doing (listening for `\changed` and adapting the response via user function).
+- Most class names in SuperCollider and other programming languages favor **American spelling**, where "adapter" dominates.
+
+---
+
+### 📚 Adapter vs Adaptor — Usage and Meaning
+
+| Spelling    | Region / Usage                                                                   | Meaning / Context                                                                                        |
+| ----------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| **Adapter** | ✅ Standard in **American English**, **programming**, and **technical contexts**  | A device or component that **translates or bridges** interfaces (e.g., software, electrical, mechanical) |
+| **Adaptor** | Alternate spelling in **British English**; occasionally used in general contexts | Less common in technical writing. Same meaning, but not conventional in programming circles              |
+
+---
+
+### 📌 Summary for SuperCollider Context:
+
+- Use **`Adapter`** unless you have a **specific stylistic or regional reason** to prefer British spelling.
+- It will align with expectations from other developers and with established naming in design patterns.
+
+---
+
+### 🔧 Possible Class Names
+
+Here are a few class name suggestions that communicate the intent:
+
+- ChangeAdapter` – directly expresses that it adapts `\changed` messages.
+- `ChangeResponder` – focuses on the reaction to `\changed`.
+- `FunctionAdapter` – if it connects a function to an object's changes.
+- `ObserverAdapter` – if it plays the role of an observer in the Observer pattern.
+
+Would you like help drafting such a class?
+#+end_quote
+
+#+begin_quote
+Yes, please help in drafting such a class. Additionally please rate your preference between the four possible Class Names that you suggested and the simpler shorter name Adapter.  Personally, while Adapter is more generic and less specific, I tend to prefer it because it is shorter. Comment on the tradeoff between shortness/simplicity and specificity of the longer names, especially considering the fact that the longer names do not precisely mirror the purpose of the class.  Change is not the same as \changed, Responder is not an adapter, the intended class does not adapt a function but an emitted \change message, and the intended class does not adapt an observer, it rather adds an observer to an object.
+#+end_quote
