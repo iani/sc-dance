@@ -6,7 +6,9 @@
 //: Read all files from folder of session 250414_001919
 //!!!! Edit the path given in the string "/Users..." to match
 // the folder path of an existing recording session on your computer
-a = OscPlayer("/Users/iani/oscdata/250414_Nikopoulos_Rokoko/250414_002557/")
+a = SessionData("/Users/iani/oscdata/250414_Nikopoulos_Rokoko/250414_002557/")
+a.times;
+a.messages collect: _.at(0);
 //: play back entire session, looping forever:
 //and trace to watch what is being played
 b = a.loop.simpleTrace;

@@ -2,12 +2,17 @@
 //Read OSC Data from files in a folder creaated by OscRecorder.
 //Parse into a timeline and play back selectively.
 
-OscPlayer {
+SessionData {
 	var <folderPath, <filePaths;
-	var <oscFiles, <times, <messages;
+	var <oscFiles, <times, <messages, <>avatar;
 
-	*new { | path |
-		^this.newCopyArgs(path).init;
+	*new { | argPath |
+		^this.newCopyArgs(argPath).init;
+	}
+
+	load { | argPath |
+		folderPath = argPath;
+		this.init;
 	}
 
 	init {
@@ -23,7 +28,7 @@ OscPlayer {
 		if (this scdFileP: argPath) {
 			^[argPath]
 		}{
-			^(argPath ++ "*.scd").pathMatch
+			^(argPath +/+ "*.scd").pathMatch
 		};
 	}
 

@@ -1,7 +1,7 @@
 
 //: prepare data playback for simulation:
 //: Read all files from folder of session 250414_001919
-a = OscPlayer("/Users/iani/oscdata/250624/250624_182908/")
+a = SessionData("/Users/iani/oscdata/250624/250624_182908/")
 //: play back entire session, looping forever:
 //and trace to watch what is being played
 b = a.loop.simpleTrace;

@@ -13,7 +13,7 @@
 PathName(~session).entries;
 // -------- 2. play the session ---------
 // create player for this session
-~player = OscPlayer(~session);
+~player = SessionData(~session);
 // play the session
 ~sequence = ~player.loop;
 // post OSC

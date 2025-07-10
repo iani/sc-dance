@@ -1,0 +1,54 @@
+// 木 10  7 2025 15:21
+// Provide shared gui/api for handling path bookmarks for
+// Rokoko Session data
+
+RokokoSessionsBookmark : PathBookmark {
+	var sessionsDict;
+	var >defaultPath;
+
+	sessionNames {
+		^this.sessionsDict.keys.asArray.sort;
+	}
+	sessionsDict {
+		sessionsDict ?? { this.makeSessionsDict };
+		^sessionsDict;
+	}
+
+	makeSessionsDict {
+		sessionsDict = IdentityDictionary();
+		this.animationFolders do: { | sd |
+			sessionsDict[sd.folderName.asSymbol] = sd;
+		};
+	}
+
+	animationFolders {
+		^this subsubfolders: "Animations"
+	}
+
+	defaultPath {
+		^defaultPath ?? {
+			defaultPath = this.sessionsDict[this.sessionNames.first];
+		}
+	}
+
+	*gui { this.default.gui }
+	gui {
+		Windows.makeWindow(this, name, { | w |
+			var list;
+			w.name = format("% : Select a session", this.class);
+			w.view.layout = VLayout(
+				list = ListView(),
+				StaticText().string_("Press enter to load session in Avatar.default")
+			);
+			list.items = this.sessionNames;
+			list.action = { | me |
+				me.items[me.value].postln;
+			};
+			list.value = 0;
+			list.enterKeyAction = { | me |
+				Avatar.default.load(this.sessionsDict[me.item.asSymbol]);
+			};
+			w.front;
+		})
+	}
+}

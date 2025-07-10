@@ -1,6 +1,6 @@
 // 土 28  6 2025 17:24
 // Parse osc data from a single file.
-// Used by OscPlayer
+// Used by SessionData
 
 OscFile {
 	var <path, <contents, <entries;

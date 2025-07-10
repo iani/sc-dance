@@ -1,6 +1,6 @@
 // 日 29  6 2025 14:03
 // play back a sequence of times and osc messages
-// obttained from an OscPlayer
+// obttained from an SessionData
 
 OscSequence {
 	var <times, <messages;

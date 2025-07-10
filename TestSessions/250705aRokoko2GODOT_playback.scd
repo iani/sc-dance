@@ -14,7 +14,7 @@
 // note: on 土  5  7 2025 14:20 the first session folder showed a distorted movement
 // trying the second session folder:
 ~session.folderName.postln;
-~player = OscPlayer(~session);
+~player = SessionData(~session);
 //: play back entire session, looping forever:
 //and trace to watch what is being played
 ~sequence = ~player.loop.simpleTrace;
@@ -49,7 +49,7 @@
 	msg.size.postln;
 });
 //: FILTER THE DATA. First filter test!
-~player = OscPlayer("/Users/iani/oscdata/250414_Nikopoulos_Rokoko/250414_002557/");
+~player = SessionData("/Users/iani/oscdata/250414_Nikopoulos_Rokoko/250414_002557/");
 //: play back entire session, looping forever:
 //and trace to watch what is being played
 ~sequence = ~player.loop.simpleTrace;

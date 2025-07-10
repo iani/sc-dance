@@ -1,0 +1,29 @@
+#+title: Implementation Notes: Class Animator
+
+* Messages
+
+* Filters
+
+Animator uses filters to modify a message before it is sent to Godot.
+
+Filters are stored in instance variable =filter=.
+
+=filter= can be either =nil= or an array of the same size as the messages sent to Godot.
+
+If the variable =filter= is nil, then no modification takes place.
+
+If the variable =filter= is an array, then the contents of each slot of the array can modify the contents of the corresponding slot in the message array.
+
+** When and how are filters made.
+
+#+begin_quote
+Animator.addFilter(func, joint, var);
+#+end_quote
+
+Construct an instance of JointAdapter and put it in the corresponding position in he filters array.  The position is found on the basis of the values of =joint= and =val= by looking it up in the MultiLevelIdentityDictionary =jointDict=
+
+- =func= :: A function with arguments =jval=, =bval=.
+  - =jval= :: The value of the joint at the corresponding position in the =message= array.  Can be a symbol (joint name), a boolean (flag corresponding to one of the settings in the Rokoko recording session), or float (value of the measurement for that joint).
+  - =bval= :: The value of the control bus channel at the position corresponding
+
+Method addFilter constructs the filter instance and

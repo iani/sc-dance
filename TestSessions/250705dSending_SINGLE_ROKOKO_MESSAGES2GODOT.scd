@@ -13,7 +13,7 @@
 ///:=========================================================
 ///2. Send arbitrary messages from a whole session
 //:load a session into a player
-~player = OscPlayer("/Users/iani/oscdata/250414_Nikopoulos_Rokoko/250414_002557/");
+~player = SessionData("/Users/iani/oscdata/250414_Nikopoulos_Rokoko/250414_002557/");
 //:Check the number of messages in the player
 ~messages = ~player.messages;
 ~messages.size;
@@ -36,11 +36,11 @@ fork {
 t = 0.1;
 t = { [0.1, 0.2].choose };
 t = [0.2, 0.2, 0.4, 0.8].pseq.asStream;
-//:Try with R
+//:Try with AnimationPlayer
 fork {
 	t = 0.5;
 	loop {
-		R.send(~messages.choose);
+		AnimationPlayer.send(~messages.choose);
 		t.value.wait;
 	}
 };
@@ -51,7 +51,7 @@ t = 0.1;
 fork {
 	t = 0.5;
 	loop {
-		R.send(m.next.postln);
+		AnimationPlayer.send(m.next.postln);
 		t.next.wait;
 	}
 };
@@ -62,7 +62,7 @@ t = 0.1;
 fork {
 	t = 0.01;
 	loop {
-		R.send(m.next);
+		AnimationPlayer.send(m.next);
 		t.next.wait;
 	}
 };

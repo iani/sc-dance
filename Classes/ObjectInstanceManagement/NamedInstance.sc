@@ -14,13 +14,13 @@ NamedInstance {
 
 	*default { ^this.new(\default); }
 
-	*new { | name = \default | ^this.named(name) }
+	*new { | name = \default ... args | ^this.named(name, args) }
 
-	*named { | name |
+	*named { | name, args |
 		var instance;
 		instance = this.all.at(this, name);
 		instance ?? {
-			instance = this.newCopyArgs(name).init;
+			instance = this.newCopyArgs(name).init(*args);
 			all.put(this, name, instance);
 		};
 		^instance;
@@ -38,4 +38,5 @@ NamedInstance {
 	enableOsc { OscControl.addListener(this, name) }
 	disableOsc { OscControl.removeListener(this, name) }
 
+	makeDefault { this.all[\default] = this }
 }
