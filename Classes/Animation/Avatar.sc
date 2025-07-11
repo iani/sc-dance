@@ -61,6 +61,7 @@ Avatar : NamedInstance {
 	messages { ^sessionData.messages }
 	parser { ^sessionData.parser }
 
+	//----- adding/removing OSC receivers-----
 	addReceiver { | netAddr | // asSymbol: guarante matching
 		netAddr.asSymbol.addAdapter(this, \msg, { | a ... msg |
 			netAddr.sendMsg(*msg);
@@ -68,5 +69,11 @@ Avatar : NamedInstance {
 	}
 	removeReceiver { | netAddr |
 		netAddr.asSymbol.removeAdapter(this, \msg);
+	}
+	//----- Filters -----
+
+	addFilter { | jointName, func, val |
+		// TODO: Use JointController instead of ValueAdapter
+		animator.addFilter(jointName, func, val);
 	}
 }

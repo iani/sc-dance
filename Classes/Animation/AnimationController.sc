@@ -13,12 +13,14 @@ AnimationController {
 	var <ctlPollRoutine;
 
 	init { | avatar |
-		this.addAdapter(avatar, \messageFormat, { | adapter, parser|
-			postf("% received a messageFormat change with parser: %\n",
-				this, parser);
-			postf("as an AnimationController I will work with:\n");
-			postf("joint names\n%\n", parser.msgNames);
-			postf("and bus names\n%\n", parser.busNames);
+		this.addAdapter(avatar, \messageFormat, { | adapter, parser |
+			// postf("% received a messageFormat change with parser: %\n",
+			// 	this, parser);
+			// postf("as an AnimationController I will work with:\n");
+			// postf("joint names\n%\n", parser.msgNames);
+			// postf("and bus names\n%\n", parser.busNames);
+			ctlvalues = List();
+			ctlvalues.array = { 0 } ! parser.busNames.size;
 		})
 	}
 

@@ -8,15 +8,15 @@
 Animator {
 	var <>avatar, <task, <messages, <times = 0.03;
 	var <>filter;
-	var <>rokokoParser;
-	var <>jointDict;
+	var <msgDict, <ctlDict;
 
 	*new { | avatar | ^this.newCopyArgs(avatar).init }
 
 	init {
-		this.addAdapter(avatar, \messageFormat, { | ... args |
-			postf("% received a messageFormat change with args: %\n",
-				this, args);
+		this.addAdapter(avatar, \messageFormat, { | a, parser |
+			msgDict = parser.msgDict;
+			ctlDict = parser.ctlDict;
+			filter = { nil } ! parser.message.size;
 		})
 	}
 
@@ -55,16 +55,21 @@ Animator {
 	reset { task.reset; messages.reset; times.reset; }
 
 	// ================== FILTERS ====================
-	addFilter { | func, joint, offset = 0 |
-		var index, filterAdapter;
+	addFilter { | joint, func, val = 0 |
+		// var index, filterAdapter;
 		// index = offset + msgCache.indexOf(joint);
-		filterAdapter = ValueAdapter(func);
-		this.filter[index] = filterAdapter;
+		// filterAdapter = ValueAdapter(func);
+		// this.filter[index] = filterAdapter;
+		// var index;
+		// "Finding the index to put a filter in".postln;
+		// index = msgDict[joint];
+		// postf("the index for % is %\n", joint, index);
+		filter[msgDict[joint]] = ValueAdapter(func, val);
 	}
 
-	removeFilter { | joint, offset = 0 |
-		var index;
+	removeFilter { | joint |
+		//		var index;
 		// index = offset + msgCache.indexOf(joint);
-		this.filter[index] = nil;
+		// this.filter[index] = nil;
 	}
 }

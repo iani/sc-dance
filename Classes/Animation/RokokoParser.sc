@@ -11,7 +11,7 @@ RokokoParser {
 	var <symbols, <indices;
 	var <msgNames, <busNames;
 	var <msgDict; // translate from joint name to index in rokoko message
-	var <busDict; // translate from joint name to index in bus/data array
+	var <ctlDict; // translate from joint name to index in bus/data array
 
 	*new { | avatar |
 		^this.newCopyArgs(avatar);
@@ -21,7 +21,7 @@ RokokoParser {
 		var i;
 		message = argMessage;
 		symbols = message.select({|x| x isKindOf: Symbol });
-		i = symbols collect: { | s | message indexOf: s  };
+		i = symbols collect: { | s | message indexOf: s };
 		// postf("Parser % comparing indices\n", this);
 		// postf("Newly created indices are: %\n", i);
 		// postf("Already existing indices are: %\n", indices);
@@ -37,16 +37,16 @@ RokokoParser {
 
 	makeDicts {
 		var jointNames, offset;
-		offset = symbols indexOf: \hip;
-		jointNames = symbols[offset..];
+		offset = message indexOf: \hip;
+		jointNames = symbols[offset - 1..];
 		msgNames = this.makeMessageNames(jointNames);
 		// postf("msg names %\n", msgNames);
 		busNames = this.makeBusNames(jointNames);
 		// postf("bus names %\n", busNames);
 		msgDict = IdentityDictionary();
 		msgNames do: { | n, i | msgDict[n] = i + offset; };
-		busDict = IdentityDictionary();
-		busNames do: { | n, i | busDict[n] = i; };
+		ctlDict = IdentityDictionary();
+		busNames do: { | n, i | ctlDict[n] = i; };
 	}
 
 	makeMessageNames { | jn |
@@ -62,30 +62,7 @@ RokokoParser {
 			busVars collect: { | v | (j ++ v).asSymbol };
 		}).flat
 	}
-	/*
-	makeMessageJoints {
 
-		var hip, jointNames, jointVarNames;
-		hip = message indexOf: \hip;
-		jointNames = symbols[(symbols indexOf: \hip)..];
-		postf("Joint names are: %\n", jointNames);
-		jointNames collect: { | n |
-			vars do: { | v |
-				jointPairs = jointPairs add: format("%%", n, v).asSymbol;
-			}
-		};
-		busVars = vars[1..];
-
-		postf("joint pairs are: %\n", jointPairs);
-		msgDict = IdentityDictionary();
-		jointPairs do: {  }
-	}
-	*/
-	makeMessageDict {
-		var messageJoints;
-	}
-
-	makeBusDict {
-
-	}
+	msgIndex { | joint | ^msgDict[joint] }
+	ctlIndex { | joint | ^ctlDict[joint] }
 }
