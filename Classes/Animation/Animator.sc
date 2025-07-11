@@ -6,20 +6,18 @@
 //:Note: dictionaris are created when obtaining the first message.
 
 Animator {
-	var <task, <messages, <times = 0.03;
+	var <>avatar, <task, <messages, <times = 0.03;
 	var <>filter;
 	var <>rokokoParser;
-	var <>jointDict, >avatar;
+	var <>jointDict;
 
-	// addr { ^addr ?? { addr = NetAddr("127.0.0.1", 22245) } }
+	*new { | avatar | ^this.newCopyArgs(avatar).init }
 
-	init { | argMessages |
-		this.messages = argMessages.pseq;
-	}
-
-	checkJointDict { | argMessage |
-
-
+	init {
+		this.addAdapter(avatar, \messageFormat, { | ... args |
+			postf("% received a messageFormat change with args: %\n",
+				this, args);
+		})
 	}
 
 	messages_ { | argMessages | messages = argMessages.asStream }
@@ -31,12 +29,14 @@ Animator {
 	// filter { ^filter ?? { filter = this.makeFilter } }
 	// makeFilter { ^nil ! msgCache.size; }
 
+	*play { this.default.start }
 	*start { this.default.start }
 	*stop { this.default.stop }
 	*pause { this.default.pause }
 	*resume { this.default.resume }
 	*reset { this.default.reset }
 
+	play { this.start }
 	start {
 		task.stop;
 		this.reset;
@@ -48,7 +48,6 @@ Animator {
 		});
 		task.start;
 	}
-	avatar { ^avatar ?? { Avatar(\default); } }
 
 	stop { task.stop; this.reset; }
 	pause { task.pause }

@@ -18,12 +18,18 @@ Avatar : NamedInstance {
 	var <>sessionPath;
 	var <sessionData, <animator, <controller;
 
+	*sessionGui { RokokoSessionsBookmark.sessionGui }
+
 	init { | argSessionPath |
+		// this.simpleTrace;
+		sessionData = SessionData(argSessionPath, this);
+		animator = Animator(this);
+		controller = AnimationController().init(this);
 		this.load(argSessionPath ?? { ScDanceSessions.defaultPath });
 	}
 
 	play {
-		if (animator.isNil) {
+		if (sessionData.isNil) {
 			^"Cannot play without data. Load a session.".postln;
 		};
 		animator.play;
@@ -32,12 +38,16 @@ Avatar : NamedInstance {
 
 	load { | path |
 		var messages;
-		// { path.postln; } ! 50;
+		sessionPath = path;
 		this.stop;
-		sessionData = SessionData(path).avatar = this;
+		postf("Loading session data from\n%\ninto %\n",
+			path, this
+		);
+		sessionData load: sessionPath;
 		messages = sessionData.messages;
-		// animator = Animator().init(messages);
-		// controller = AnimationController().init(messages);
+			postf("\Loaded % messages", messages.size;
+		);
+		animator.messages = messages.pseq;
 	}
 
 	msgStream {}
@@ -49,4 +59,14 @@ Avatar : NamedInstance {
 	}
 
 	messages { ^sessionData.messages }
+	parser { ^sessionData.parser }
+
+	addReceiver { | netAddr | // asSymbol: guarante matching
+		netAddr.asSymbol.addAdapter(this, \msg, { | a ... msg |
+			netAddr.sendMsg(*msg);
+		});
+	}
+	removeReceiver { | netAddr |
+		netAddr.asSymbol.removeAdapter(this, \msg);
+	}
 }

@@ -3,24 +3,25 @@
 //Parse into a timeline and play back selectively.
 
 SessionData {
-	var <folderPath, <filePaths;
-	var <oscFiles, <times, <messages, <>avatar;
+	var <folderPath, <>avatar, <filePaths;
+	var <oscFiles, <times, <messages;
+	var <parser;
 
-	*new { | argPath |
-		^this.newCopyArgs(argPath).init;
+	*new { | argPath, argAvatar |
+		^this.newCopyArgs(argPath, argAvatar);
 	}
 
 	load { | argPath |
+		// postf("Debugging SessionData.load. Path is:\n%\n", argPath);
 		folderPath = argPath;
-		this.init;
+		this.loadData;
 	}
 
-	init {
-		filePaths = this getScdFiles: folderPath;
+	loadData {
+		messages = [];
 		this.readFiles;
 		this.makeTimesMessages;
-		// times = oscFiles collect: { | f | f.entries.flop[0] };
-		// messages = oscFiles collect: { | f | f.entries.flop[1] }
+		this.updateParser;
 	}
 
 	getScdFiles { | argPath |
@@ -28,18 +29,29 @@ SessionData {
 		if (this scdFileP: argPath) {
 			^[argPath]
 		}{
-			^(argPath +/+ "*.scd").pathMatch
+			^(argPath +/+ "*.scd").pathMatch;
 		};
 	}
 
 	readFiles {
+		// postf("Debugging SessionData.readFiles. folderPath is:\n%\n",
+		// 	folderPath);
+		filePaths = this getScdFiles: folderPath;
+		// postf("Debugging SessionData.readFiles. filePaths is:\n%\n",
+		// 	filePaths);
 		oscFiles = filePaths collect: OscFile(_);
-		// oscFiles = oscFiles select: { | f | f.entries.size > 0 }
+		// postf("Debugging SessionData.readFiles. oscFiles is:\n%\n",
+		// 	oscFiles);
+		// oscFiles do: { | f |
+		// 	postf("Before filter: % has % entries\n", f, f.entries.size)
+		// };
 		oscFiles do: { | f |
 			f.filterMessages('/rokoko/');
-			// "====== filtered entries are =========".postln;
-			// f.entries.postln;
 		};
+		oscFiles = oscFiles select: { | f | f.entries.size > 0 }
+		// oscFiles do: { | f |
+		// 	postf("After filter: % has % entries\n", f, f.entries.size)
+		// };
 	}
 
 	makeTimesMessages {
@@ -65,5 +77,10 @@ SessionData {
 	spawn { | from = 0, to |
 		to ?? { to = times.size - 1; };
 		^OscSequence(times[from..to], messages[from..to]);
+	}
+
+	updateParser {
+		parser ?? { parser = RokokoParser(avatar) };
+		parser.parse(messages.first);
 	}
 }

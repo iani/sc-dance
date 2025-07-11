@@ -6,6 +6,17 @@ RokokoSessionsBookmark : PathBookmark {
 	var sessionsDict;
 	var >defaultPath;
 
+	*sessionGui {
+		// this.subclasses.postln;
+		Windows.makeWindow(this, \gui, { | w |
+			var widgets;
+			w.name = "Rokoko Sessions";
+			widgets = this.subclasses collect: _.sessionListView;
+			widgets = widgets add: StaticText().string_("Press enter to load session in Avatar.default");
+			w.view.layout = VLayout(*widgets.flat);
+			w.front;
+		})
+	}
 	sessionNames {
 		^this.sessionsDict.keys.asArray.sort;
 	}
@@ -42,7 +53,7 @@ RokokoSessionsBookmark : PathBookmark {
 			);
 			list.items = this.sessionNames;
 			list.action = { | me |
-				me.items[me.value].postln;
+				// me.items[me.value].postln;
 			};
 			list.value = 0;
 			list.enterKeyAction = { | me |
@@ -50,5 +61,18 @@ RokokoSessionsBookmark : PathBookmark {
 			};
 			w.front;
 		})
+	}
+	sessionListView {
+		var list;
+		list = ListView();
+		list.items = this.sessionNames;
+		list.action = { | me |
+			// me.items[me.value].postln;
+		};
+		list.value = 0;
+		list.enterKeyAction = { | me |
+			Avatar.default.load(this.sessionsDict[me.item.asSymbol]);
+		};
+		^[StaticText().string_(this.asString), list];
 	}
 }
