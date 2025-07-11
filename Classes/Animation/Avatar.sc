@@ -28,6 +28,18 @@ Avatar : NamedInstance {
 		this.addRaceiver(this.class.localGodotAddr);
 	}
 
+	deleteLocalGodot {
+		this.deleteRaceiver(this.class.localGodotAddr);
+	}
+
+	addLocalSC {
+		this.addRaceiver(NetAddr.localAddr);
+	}
+
+	deleteLocalSC {
+		this.deleteRaceiver(NetAddr.localAddr);
+	}
+
 	init { | argSessionPath |
 		// this.simpleTrace;
 		sessionData = SessionData(argSessionPath, this);
@@ -75,7 +87,7 @@ Avatar : NamedInstance {
 			netAddr.sendMsg(*msg);
 		});
 	}
-	removeReceiver { | netAddr |
+	deleteReceiver { | netAddr |
 		netAddr.asSymbol.removeAdapter(this, \msg);
 	}
 	//----- Filters -----
