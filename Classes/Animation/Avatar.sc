@@ -15,10 +15,18 @@
 // See implementation notes
 
 Avatar : NamedInstance {
+	classvar localGodotAddr;
 	var <>sessionPath;
 	var <sessionData, <animator, <controller;
 
+	*localGodotAddr {
+		^localGodotAddr ?? { localGodotAddr = NetAddr("127.0.0.1", 22245); }
+	}
 	*sessionGui { RokokoSessionsBookmark.sessionGui }
+
+	addLocalGodot {
+		this.addRaceiver(this.class.localGodotAddr);
+	}
 
 	init { | argSessionPath |
 		// this.simpleTrace;
