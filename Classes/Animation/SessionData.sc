@@ -83,4 +83,9 @@ SessionData {
 		parser ?? { parser = RokokoParser(avatar) };
 		parser.parse(messages.first);
 	}
+
+	makeValueArray { | argMsg |
+		// filter numeric values from rokoko message in an array
+		^parser.makeValueArray(argMsg);
+	}
 }

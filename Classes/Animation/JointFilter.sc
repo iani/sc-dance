@@ -18,17 +18,20 @@
 // f.filter(1); // function f.filter returns the input
 // g.filter(1); // nil.filter also returns the input
 
-ValueAdapter {
-	var <>func, <>val;
-	*new { | func, val |
-		^this.newCopyArgs(func, val);
+JointFilter {
+	var <>func, <>controls, <>index = 0, <joint;
+
+	*new { | func, controls, index, joint |
+		^this.newCopyArgs(func, controls, index, joint);
 	}
 
 	filter { | input |
-		^func.(input, val);
+		if (index.isNil) {
+			^func.(input);
+		}{
+			^func.(input, controls[index] ? 0);
+		}
 	}
-
-	asFilter { ^this }
 }
 
 + Nil {
@@ -50,3 +53,19 @@ ValueAdapter {
 		^ValueAdapter(this, val);
 	}
 }
+
+// Early prototype
+/*
+ValueAdapter {
+	var <>func, val;
+	*new { | func, val |
+		^this.newCopyArgs(func, val);
+	}
+
+	filter { | input |
+		^func.(input);
+	}
+
+	asFilter { ^this }
+}
+*/

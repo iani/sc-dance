@@ -9,44 +9,53 @@ RokokoParser {
 	var <>avatar; // notify avatar when format changes;
 	var <message;
 	var <symbols, <indices;
-	var <msgNames, <busNames;
+	var <msgNames, <ctlNames;
 	var <msgDict; // translate from joint name to index in rokoko message
 	var <ctlDict; // translate from joint name to index in bus/data array
+	var <jointOffset; // index of first joint
+	var <>firstJoint = \hip; // first joint in the msg array
 
 	*new { | avatar |
 		^this.newCopyArgs(avatar);
 	}
 
 	parse { | argMessage |
-		var i;
+		var i, newSymbols;
 		message = argMessage;
-		symbols = message.select({|x| x isKindOf: Symbol });
-		i = symbols collect: { | s | message indexOf: s };
-		// postf("Parser % comparing indices\n", this);
-		// postf("Newly created indices are: %\n", i);
-		// postf("Already existing indices are: %\n", indices);
-		// postf("Comparing them. Are they equal? : %\n", indices == i);
-		// postf("Comparing them. Are they NOT equal? : %\n", indices != i);
-		if (i != indices) {
+		newSymbols = message.select({|x| x isKindOf: Symbol });
+		i = newSymbols collect: { | s | message indexOf: s };
+		// "DEBUGGING FORMAT CHANGE".postln;
+		// postf("old indices: \n%\nnew indices\n%\n", indices, i);
+		// postf("are indices NOT equal? %\n", indices != i);
+		// postf("old symbols: \n%\nnew symbols%\n",
+		// 	symbols, newSymbols);
+		// postf("are symbols NOT equal? %\n", symbols != newSymbols);
+		// postf("If either, then i should update: %\n\n",
+		// 	(i != indices) or: { newSymbols != symbols }
+		// );
+		if ((i != indices) or: { newSymbols != symbols }) {
 			"Message format has changed. Updating!".postln;
 			indices = i;
+			symbols = newSymbols;
 			this.makeDicts;
 			avatar.changed(\messageFormat, this);
 		};
 	}
 
 	makeDicts {
-		var jointNames, offset;
-		offset = message indexOf: \hip;
-		jointNames = symbols[offset - 1..];
+		var jointNames;
+		jointNames = symbols[symbols indexOf: firstJoint..];
+		// postf("\n\n\n%\n\n\n", jointNames);
+		jointOffset = message indexOf: firstJoint;
+		// message[jointOffset..].postln;
 		msgNames = this.makeMessageNames(jointNames);
-		// postf("msg names %\n", msgNames);
-		busNames = this.makeBusNames(jointNames);
-		// postf("bus names %\n", busNames);
+		ctlNames = this.makeBusNames(jointNames);
+		// postf("\n\n\nmsgNames:%\n\n\n", msgNames);
+		// postf("\n\n\nctlNames:%\n\n\n", ctlNames);
 		msgDict = IdentityDictionary();
-		msgNames do: { | n, i | msgDict[n] = i + offset; };
+		msgNames do: { | n, i | msgDict[n] = i + jointOffset; };
 		ctlDict = IdentityDictionary();
-		busNames do: { | n, i | ctlDict[n] = i; };
+		ctlNames do: { | n, i | ctlDict[n] = i; };
 	}
 
 	makeMessageNames { | jn |
@@ -65,4 +74,30 @@ RokokoParser {
 
 	msgIndex { | joint | ^msgDict[joint] }
 	ctlIndex { | joint | ^ctlDict[joint] }
+
+	makeValueArray { | argMsg |
+		// since flop is not a primitive, this could be more expensive!
+		// ^argMsg[jointOffset..].clump(8).flop[1..].flop.flat;
+		^argMsg[jointOffset..] select: { | n | n.isKindOf(Symbol).not }
+	}
+
+	// for checking dicts:
+	getJointValue { | joint |
+		// postf("joint: %, message size: %\n\n", joint, message.size);
+		// postt("msgIndex %\n", this.msgIndex[joint])
+		^message[this.msgIndex(joint)];
+	}
+
+	postMsgDict {
+		msgNames.postln;
+		msgNames do: { | n | [n, msgDict[n]].postln; };
+		msgNames.postln;
+	}
+
+	postCtlDict {
+		ctlNames.postln;
+		ctlNames do: { | n | [n, ctlDict[n]].postln; };
+		ctlNames.postln;
+
+	}
 }

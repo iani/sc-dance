@@ -35,11 +35,18 @@ Animator {
 		this.reset;
 		task = Task({
 			loop {
-				avatar.changed(\msg, filter.filter(messages.next));
+				var m;
+				m = messages.next;
+				avatar publishValueArray: m;
+				avatar.changed(\msg, this.filterMessage(m));
 				times.next.wait;
 			};
 		});
 		task.start;
+	}
+
+	filterMessage { | argMessage |
+		^filter filter: argMessage;
 	}
 
 	stop { task.stop; this.reset; }
@@ -48,7 +55,7 @@ Animator {
 	reset { task.reset; messages.reset; times.reset; }
 
 	// ================== FILTERS ====================
-	addFilter { | joint, func, val = 0 |
+	addFilter { | joint, func |
 		// var index, filterAdapter;
 		// index = offset + msgCache.indexOf(joint);
 		// filterAdapter = ValueAdapter(func);
@@ -57,7 +64,13 @@ Animator {
 		// "Finding the index to put a filter in".postln;
 		// index = msgDict[joint];
 		// postf("the index for % is %\n", joint, index);
-		filter[msgDict[joint]] = ValueAdapter(func, val);
+		filter[msgDict[joint]] = this.makeFilter(joint, func);
+	}
+
+	getFilter { | joint | ^filter[msgDict[joint]] }
+
+	makeFilter { | joint, func |
+		^JointFilter(func, avatar.ctlvalues, avatar ctlIndex: joint, joint);
 	}
 
 	removeFilter { | joint |

@@ -20,7 +20,7 @@ AnimationController {
 			// postf("joint names\n%\n", parser.msgNames);
 			// postf("and bus names\n%\n", parser.busNames);
 			ctlvalues = List();
-			ctlvalues.array = { 0 } ! parser.busNames.size;
+			ctlvalues.array = { 0 } ! parser.ctlNames.size;
 		})
 	}
 

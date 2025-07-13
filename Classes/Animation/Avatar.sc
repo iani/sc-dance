@@ -95,7 +95,7 @@ Avatar : NamedInstance {
 		);
 		sessionData load: sessionPath;
 		messages = sessionData.messages;
-			postf("\Loaded % messages", messages.size;
+			postf("\Loaded % messages\n", messages.size;
 		);
 		animator.messages = messages.pseq;
 	}
@@ -103,8 +103,6 @@ Avatar : NamedInstance {
 	msgStream {}
 	timeStream {}
 
-	messages { ^sessionData.messages }
-	parser { ^sessionData.parser }
 
 	//----- adding/removing OSC receivers-----
 	addReceiver { | netAddr | // asSymbol: guarante matching
@@ -146,9 +144,26 @@ Avatar : NamedInstance {
 	localGodot { ^this.class.localGodotAddr }
 	//----- Filters -----
 
-	addFilter { | jointName, func, val |
+	addFilter { | jointName, func |
 		// TODO: Use JointController instead of ValueAdapter
-		animator.addFilter(jointName, func, val);
+		animator.addFilter(jointName, func);
 	}
 
+	getFilter { | joint | ^animator getFilter: joint }
+
+	ctlvalues { ^controller.ctlvalues }
+	ctlIndex { | joint | ^this.parser.ctlIndex(joint) }
+
+	messages { ^sessionData.messages }
+	parser { ^sessionData.parser }
+
+	filterMessage { | message |
+		animator filterMessage: message;
+	}
+
+	publishValueArray { | argMsg |
+		// get numeric values from raw rokoko message
+		// and publish them with changed \values
+		this.changed(\values, sessionData.makeValueArray(argMsg))
+	}
 }
