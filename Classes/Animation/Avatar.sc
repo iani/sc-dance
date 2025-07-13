@@ -51,8 +51,13 @@ Avatar : NamedInstance {
 		this.load(argSessionPath ?? { ScDanceSessions.defaultPath });
 	}
 
+	*play { this.default.start }
 	*start { this.default.start }
-	*play { this.default.play }
+	*stop { this.default.stop }
+	*pause { this.default.pause }
+	*resume { this.default.resume }
+	*reset { this.default.reset }
+
 	start { this.play }
 	play {
 		if (sessionData.isNil) {
@@ -62,7 +67,6 @@ Avatar : NamedInstance {
 		controller.play;
 	}
 
-	*stop { this.default.stop }
 	stop {
 		animator.stop;
 		controller.stop;
@@ -104,17 +108,47 @@ Avatar : NamedInstance {
 
 	//----- adding/removing OSC receivers-----
 	addReceiver { | netAddr | // asSymbol: guarante matching
-		netAddr.asSymbol.addAdapter(this, \msg, { | a ... msg |
-			netAddr.sendMsg(*msg);
-		});
+		// IMPORTANT: if netAddr is local addr, then replace
+		// '/rokoko/' osc message with '/r' in order to avoid
+		// feedback when operating in filter-forward mode
+		if (netAddr == NetAddr.localAddr) {
+			netAddr.asSymbol.addAdapter(this, \msg, { | a ... msg |
+				msg[0] = '/r';
+				netAddr.sendMsg(*msg);
+			})
+		}{
+			netAddr.asSymbol.addAdapter(this, \msg, { | a ... msg |
+				netAddr.sendMsg(*msg);
+			})
+		}
+;
 	}
 	deleteReceiver { | netAddr |
 		netAddr.asSymbol.removeAdapter(this, \msg);
 	}
+
+	sendToSelf { | flag = true |
+		if (flag) {
+			this addReceiver: NetAddr.localAddr;
+		}{
+			this deleteReceiver: NetAddr.localAddr;
+		}
+	}
+
+	sendToGodot { | flag = true |
+		if (flag) {
+			this addReceiver: this.localGodot;
+		}{
+			this deleteReceiver: this.localGodot;
+		}
+	}
+
+	localGodot { ^this.class.localGodotAddr }
 	//----- Filters -----
 
 	addFilter { | jointName, func, val |
 		// TODO: Use JointController instead of ValueAdapter
 		animator.addFilter(jointName, func, val);
 	}
+
 }

@@ -29,20 +29,13 @@ Animator {
 	// filter { ^filter ?? { filter = this.makeFilter } }
 	// makeFilter { ^nil ! msgCache.size; }
 
-	*play { this.default.start }
-	*start { this.default.start }
-	*stop { this.default.stop }
-	*pause { this.default.pause }
-	*resume { this.default.resume }
-	*reset { this.default.reset }
-
 	play { this.start }
 	start {
 		task.stop;
 		this.reset;
 		task = Task({
 			loop {
-				this.avatar.changed(\msg, filter.filter(messages.next));
+				avatar.changed(\msg, filter.filter(messages.next));
 				times.next.wait;
 			};
 		});
