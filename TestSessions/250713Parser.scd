@@ -13,6 +13,8 @@ Avatar.messages.first;
 
 Avatar.default.load;
 Avatar.default;
+Avatar.valuesGui;
+Avatar.default.parser makeValueArray: Avatar.default.parser.message;
 Avatar.default.parser.message;
 Avatar.default.parser parse: Avatar.default.parser.message;
 Avatar.default.parser parse: ([\xavier, \serra] ++ Avatar.default.parser.message);

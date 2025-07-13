@@ -164,6 +164,32 @@ Avatar : NamedInstance {
 	publishValueArray { | argMsg |
 		// get numeric values from raw rokoko message
 		// and publish them with changed \values
-		this.changed(\values, sessionData.makeValueArray(argMsg))
+		this.changed(\rawvalues, sessionData.makeValueArray(argMsg))
+	}
+
+	valuesGui {
+		// postf("VALUES GUI FOR %\n", this);
+		Windows.makeWindow(this, \valuesGui, { | w |
+			var rawview, filtview;
+			w.name = format("Values played by %", this);
+			w.bounds = Rect(0, 0, 1300, 200);
+			w.layout = HLayout(
+				~rawview = rawview = MultiSliderView(),
+				~filtview =
+				filtview = MultiSliderView()
+			);
+			rawview.thumbSize = 3;
+			filtview.thumbSize = 3;
+			rawview.addAdapter(this, \rawvalues, { | a ... values |
+				// values.postln;
+				{ a.listener.value = values.normalize; }.defer;
+			});
+			rawview.onClose = { | me |
+				// postf("% closed\n", me);
+				me.removeAdapter(this, \rawvalues);
+			};
+			w.front;
+			// { w.postln } ! 10;
+		})
 	}
 }
