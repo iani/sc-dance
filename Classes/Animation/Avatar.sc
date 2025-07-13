@@ -15,7 +15,7 @@
 // See implementation notes
 
 Avatar : NamedInstance {
-	classvar localGodotAddr;
+	classvar >localGodotAddr;
 	var <>sessionPath;
 	var <sessionData, <animator, <controller;
 
@@ -24,6 +24,9 @@ Avatar : NamedInstance {
 	}
 	*sessionGui { RokokoSessionsBookmark.sessionGui }
 
+	*allSessionNames { // list sessions from all subclasses
+		^RokokoSessionsBookmark.allSessionNames;
+	}
 	addLocalGodot {
 		this.addRaceiver(this.class.localGodotAddr);
 	}
@@ -48,6 +51,9 @@ Avatar : NamedInstance {
 		this.load(argSessionPath ?? { ScDanceSessions.defaultPath });
 	}
 
+	*start { this.default.start }
+	*play { this.default.play }
+	start { this.play }
 	play {
 		if (sessionData.isNil) {
 			^"Cannot play without data. Load a session.".postln;
@@ -56,8 +62,28 @@ Avatar : NamedInstance {
 		controller.play;
 	}
 
+	*stop { this.default.stop }
+	stop {
+		animator.stop;
+		controller.stop;
+	}
+
+	loadNamed { | sessionName |
+		this load: RokokoSessionsBookmark.allSessionsDict[sessionName]
+	}
+
+	loadDialog {
+		FileDialog({ | paths |
+			var path;
+			path = paths.first +/+ "";
+			"Loading:".postln;
+			path.postln;
+			this.load(path);
+		}, fileMode: 2);
+	}
 	load { | path |
 		var messages;
+		path ?? { path = ScDanceSessions.defaultPath };
 		sessionPath = path;
 		this.stop;
 		postf("Loading session data from\n%\ninto %\n",
@@ -72,11 +98,6 @@ Avatar : NamedInstance {
 
 	msgStream {}
 	timeStream {}
-
-	stop {
-		animator.stop;
-		controller.stop;
-	}
 
 	messages { ^sessionData.messages }
 	parser { ^sessionData.parser }

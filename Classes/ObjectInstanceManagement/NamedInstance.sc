@@ -6,6 +6,14 @@ NamedInstance {
 
 	var <>name;
 
+	*allSubclassInstancesOf { | aClass |
+		^aClass.subclasses.collect({ | s | this.allInstancesOf(s)}).flat;
+	}
+
+	*allInstancesOf { | aClass |
+		^this.all.leaves.flat select: { | c | c.class === aClass }
+	}
+	all { ^this.class.all }
 	*all { ^all ?? { all = MultiLevelIdentityDictionary() } }
 
 	*doesNotUnderstand { | selector ... args |
@@ -38,5 +46,5 @@ NamedInstance {
 	enableOsc { OscControl.addListener(this, name) }
 	disableOsc { OscControl.removeListener(this, name) }
 
-	makeDefault { this.all[\default] = this }
+	makeDefault { this.all.put(this.class, \default, this) }
 }

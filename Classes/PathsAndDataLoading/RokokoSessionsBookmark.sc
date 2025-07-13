@@ -6,12 +6,24 @@ RokokoSessionsBookmark : PathBookmark {
 	var sessionsDict;
 	var >defaultPath;
 
+	*allSessionNames { ^this.allSessionsDict.keys.asArray.sort;}
+	*allSessionsDict {
+		var dict;
+		this.subclasses.do({|s| s.default});
+		dict = IdentityDictionary();
+		NamedInstance.allSubclassInstancesOf(this) do: { | i |
+			i.sessionsDict keysValuesDo: { | key, value |
+				dict[key] = value;
+			}
+		}
+		^dict;
+	}
 	*sessionGui {
 		// this.subclasses.postln;
 		Windows.makeWindow(this, \gui, { | w |
 			var widgets;
 			w.name = "Rokoko Sessions";
-			widgets = this.subclasses collect: _.sessionListView;
+			widgets = NamedInstance.allSubclassInatancesOf(this) collect: _.sessionListView;
 			widgets = widgets add: StaticText().string_("Press enter to load session in Avatar.default");
 			w.view.layout = VLayout(*widgets.flat);
 			w.front;

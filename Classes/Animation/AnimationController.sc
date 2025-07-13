@@ -27,4 +27,7 @@ AnimationController {
 	play {
 		"AnimatorController:play is not yet implemented.".postln;
 	}
+	stop {
+		"AnimatorController:stop is not yet implemented.".postln;
+	}
 }
