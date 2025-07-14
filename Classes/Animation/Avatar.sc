@@ -28,7 +28,7 @@ Avatar : NamedInstance {
 		^RokokoSessionsBookmark.allSessionNames;
 	}
 	addLocalGodot {
-		this.addRaceiver(this.class.localGodotAddr);
+		this.addReceiver(this.class.localGodotAddr);
 	}
 
 	deleteLocalGodot {
@@ -144,17 +144,26 @@ Avatar : NamedInstance {
 	localGodot { ^this.class.localGodotAddr }
 	//----- Filters -----
 
-	addFilter { | jointName, func |
-		// TODO: Use JointController instead of ValueAdapter
-		animator.addFilter(jointName, func);
+	addFilterc { | jointName | // wcontrol values
+		this.addFilter(jointName, { | m, c | c })
 	}
 
-	getFilter { | joint | ^animator getFilter: joint }
+	addFiltermpc { | jointName | // wcontrol values
+		this.addFilter(jointName, { | m, c | m + c })
+	}
 
+	addFiltermxc { | jointName | // wcontrol values
+		this.addFilter(jointName, { | m, c | m * c })
+	}
+
+	addFilter { | jointName, func | animator.addFilter(jointName, func); }
+	removeFilter { | joint | animator removeFilter: joint }
+	getFilter { | joint | ^animator getFilter: joint }
+	removeFilters { animator.removeFilters }
 	ctlvalues { ^controller.ctlvalues }
 	ctlIndex { | joint | ^this.parser.ctlIndex(joint) }
-
 	messages { ^sessionData.messages }
+	messageSize { ^sessionData.messages.first.size }
 	parser { ^sessionData.parser }
 
 	filterMessage { | message |
@@ -167,10 +176,12 @@ Avatar : NamedInstance {
 		this.changed(\rawvalues, sessionData.makeValueArray(argMsg))
 	}
 
-	// =========== SYNTHS ============
+	// =========== SYNTHS + Control (of controlbus) ============
 
 	addSynth { | key, synthFunc | controller.addSynth(key, synthFunc) }
-	deleteSynth { | key | controller.deleteSynth(key) }
+	removeSynth { | key | controller.removeSynth(key) }
+	setctl { | key, value | controller.setctl(key, value); }
+	ctloffset { | key | ^this.parser.ctlDict[key] }
 
 	// =========== GUI ============
 	valuesGui {

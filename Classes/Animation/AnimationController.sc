@@ -65,17 +65,21 @@ AnimationController {
 	}
 	doOnCmdPeriod { /* this.play */ /* MAYBE??? */ }
 
-	// =========== SYNTHS ============
+	// =========== SYNTHS and Control ============
 
 	addSynth { | key, synthFunc |
-		this.deleteSynth(key);
+		this.removeSynth(key);
 		synths[key] = ioEnvir use: { synthFunc.play; };
 	}
 
 	synths { ^synths ?? { synths = IdentityDictionary(); } }
 
-	deleteSynth { | key |
+	removeSynth { | key |
 		this.synths[key].free;
 		synths[key] = nil;
+	}
+
+	setctl { | key, value |
+		ctlbus.setAt(avatar.ctloffset(key), value)
 	}
 }

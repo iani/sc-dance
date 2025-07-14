@@ -27,7 +27,7 @@ JointFilter {
 
 	filter { | input |
 		if (index.isNil) {
-			^func.(input);
+			^func.(input, 0);
 		}{
 			^func.(input, controls[index] ? 0);
 		}

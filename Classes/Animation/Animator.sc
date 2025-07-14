@@ -16,18 +16,14 @@ Animator {
 		this.addAdapter(avatar, \messageFormat, { | a, parser |
 			msgDict = parser.msgDict;
 			ctlDict = parser.ctlDict;
-			filter = { nil } ! parser.message.size;
+			this.resetFilters;
 		})
 	}
 
+	resetFilters { filter = { nil } ! avatar.messageSize; }
+
 	messages_ { | argMessages | messages = argMessages.asStream }
 	times_ { | argTimes | times = argTimes.asStream }
-
-	makeJointDict { | message |
-
-	}
-	// filter { ^filter ?? { filter = this.makeFilter } }
-	// makeFilter { ^nil ! msgCache.size; }
 
 	play { this.start }
 	start {
@@ -56,14 +52,6 @@ Animator {
 
 	// ================== FILTERS ====================
 	addFilter { | joint, func |
-		// var index, filterAdapter;
-		// index = offset + msgCache.indexOf(joint);
-		// filterAdapter = ValueAdapter(func);
-		// this.filter[index] = filterAdapter;
-		// var index;
-		// "Finding the index to put a filter in".postln;
-		// index = msgDict[joint];
-		// postf("the index for % is %\n", joint, index);
 		filter[msgDict[joint]] = this.makeFilter(joint, func);
 	}
 
@@ -74,8 +62,9 @@ Animator {
 	}
 
 	removeFilter { | joint |
-		//		var index;
-		// index = offset + msgCache.indexOf(joint);
-		// this.filter[index] = nil;
+		filter[msgDict[joint]] = nil;
 	}
+
+	// remove all filters
+	removeFilters { this.resetFilters }
 }
