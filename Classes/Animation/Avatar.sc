@@ -164,14 +164,17 @@ Avatar : NamedInstance {
 
 	//----- Filters -----
 
+	addSimpleFilter { | jointName | this addFilterc: jointName }
 	addFilterc { | jointName | // wcontrol values
 		this.addFilter(jointName, { | m, c | c })
 	}
 
+	addSumFilter { | jointName | this addFiltermpc: jointName }
 	addFiltermpc { | jointName | // wcontrol values
 		this.addFilter(jointName, { | m, c | m + c })
 	}
 
+	addProductFilter { | jointName | this addFiltermxc: jointName }
 	addFiltermxc { | jointName | // wcontrol values
 		this.addFilter(jointName, { | m, c | m * c })
 	}

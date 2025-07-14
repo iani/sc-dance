@@ -7,11 +7,11 @@
 // Run this line before starting the Animation session:
 Server.default.boot;
 
-// 1. Start a gui and animation and connect to godot:
+// 1. Open a gui, connect to Godot, start playing default animation
 Avatar.valuesGui.sendToGodot.play;
 
 //: 2. Filter: Make hip y position follow the values of the control bus
-Avatar.addFilterc(\hipy);
+Avatar.addSimpleFilter(\hipy);
 
 //: 3. Set the value of control of hip y.
 Avatar.setctl(\hipy, 2);
@@ -26,11 +26,11 @@ Avatar.removeFilter(\hipy);
 
 //: 6. Control a joint with a synth
 
-Avatar.addFilterc(\hipy); // remember to add back the control filter
+Avatar.addSimpleFilter(\hipy); // remember to add back the control filter
 Avatar.addSynth(\test, { ~hipy.out(SinOsc.kr(1/5) + 1) });
 
 //: 7. Control another joint with a synth
-Avatar.addFilterc(\chestqw); // remember to add back the control filter
+Avatar.addSimpleFilter(\chestqw); // remember to add back the control filter
 Avatar.addSynth(\chest, { ~chestqw.out(SinOsc.kr(1) * 0.5) });
 
 //: 8. Remove all filters.

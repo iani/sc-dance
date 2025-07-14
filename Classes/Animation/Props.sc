@@ -65,7 +65,7 @@ Props {
 	send {
 		avatar.changed(\props, [
 			avatar.name, r, g, b, type,
-			x, y, z, qx, qy, qz
+			x, y, z, qx, qy, qz, qw
 		])
 	}
 

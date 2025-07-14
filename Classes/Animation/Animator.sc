@@ -25,7 +25,7 @@ Animator {
 
 	resetFilters {
 		filter = { nil } ! avatar.messageSize;
-		filter[2] = BasicFilter(Avatar.name);
+		filter[2] = BasicFilter(avatar.name);
 	}
 
 	messages_ { | argMessages | messages = argMessages.asStream }

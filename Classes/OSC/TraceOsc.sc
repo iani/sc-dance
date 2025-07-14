@@ -4,7 +4,7 @@ TraceOsc : NamedInstance {
 	var <>excludedMessages = #[
 			'/cbmon', '/status.reply', '/done', '/n_end',
 			'/recordingDuration', '/n_go', '/d_removed', '/synced',
-			'/groupclient/ping', '/minibeesmooth'
+			'/groupclient/ping', '/minibeesmooth', '/c_setn'
 		];
 	var <>excludeServerMessages = true;
 	enableOsc { this.enable }
