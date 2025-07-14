@@ -39,7 +39,7 @@ The AnimationController instance contains:
 - sclsynths: A dictionary for managing synths that write to ctlbus
 - animsynths: A dictionary for managing synths that operate on animbus
 
-* reading and writing mechanism
+* Reading, modifying and writing animation messages
 
 ** Animation message sources
 
