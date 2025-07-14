@@ -8,26 +8,74 @@
 // 3. Handle synths reading from the animationvalues in the bus.
 
 AnimationController {
-	var <ctlbus, <ctlsynths, <ctlvalues;
-	var <animbus, <animsynths;
+	var <ctlbus, <ctlvalues;
+	var <animbus;
 	var <ctlPollRoutine;
+	var <ioArray, <ioEnvir;
+	var <>avatar, synths;
 
-	init { | avatar |
+	init { | argAvatar |
+		avatar = argAvatar;
+		ctlvalues = List();
+		// this.reset(avatar.parser);
 		this.addAdapter(avatar, \messageFormat, { | adapter, parser |
-			// postf("% received a messageFormat change with parser: %\n",
-			// 	this, parser);
-			// postf("as an AnimationController I will work with:\n");
-			// postf("joint names\n%\n", parser.msgNames);
-			// postf("and bus names\n%\n", parser.busNames);
-			ctlvalues = List();
-			ctlvalues.array = { 0 } ! parser.ctlNames.size;
+			this.reset(parser);
 		})
 	}
 
+	reset { | parser |
+		ctlvalues.array = { 0 } ! parser.ctlNames.size;
+		ctlbus.free;
+		animbus.free;
+		this.makeBuses(parser);
+	}
+
+	makeBuses { | parser |
+		ctlbus = Bus.control(Server.default, ctlvalues.size);
+		animbus = Bus.control(Server.default, ctlvalues.size);
+		this.makeIO(parser);
+	}
+
+	makeIO { | parser |
+		ioArray = parser.ctlNames collect: { | n, i |
+			JointIO(n, i + animbus.index, i + ctlbus.index);
+		};
+		ioEnvir = Event();
+		ioArray do: { | j | ioEnvir[j.joint] = j; }
+	}
+
 	play {
-		"AnimatorController:play is not yet implemented.".postln;
+		ctlPollRoutine = fork {
+			loop {
+				ctlbus.getn(ctlbus.numChannels, { | values |
+					ctlvalues.array = values;
+					avatar.changed(\ctlvalues, values);
+				});
+				30.reciprocal.wait;
+			}
+		};
+		this.addAdapter(avatar, \rawvalues, { | a ... vals |
+			animbus.setn(vals);
+		});
+		CmdPeriod add: this;
 	}
 	stop {
-		"AnimatorController:stop is not yet implemented.".postln;
+		ctlPollRoutine.stop;
+		CmdPeriod remove: this;
+	}
+	doOnCmdPeriod { /* this.play */ /* MAYBE??? */ }
+
+	// =========== SYNTHS ============
+
+	addSynth { | key, synthFunc |
+		this.deleteSynth(key);
+		synths[key] = ioEnvir use: { synthFunc.play; };
+	}
+
+	synths { ^synths ?? { synths = IdentityDictionary(); } }
+
+	deleteSynth { | key |
+		this.synths[key].free;
+		synths[key] = nil;
 	}
 }

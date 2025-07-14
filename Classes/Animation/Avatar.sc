@@ -167,6 +167,12 @@ Avatar : NamedInstance {
 		this.changed(\rawvalues, sessionData.makeValueArray(argMsg))
 	}
 
+	// =========== SYNTHS ============
+
+	addSynth { | key, synthFunc | controller.addSynth(key, synthFunc) }
+	deleteSynth { | key | controller.deleteSynth(key) }
+
+	// =========== GUI ============
 	valuesGui {
 		// postf("VALUES GUI FOR %\n", this);
 		Windows.makeWindow(this, \valuesGui, { | w |
@@ -181,15 +187,22 @@ Avatar : NamedInstance {
 			rawview.thumbSize = 3;
 			filtview.thumbSize = 3;
 			rawview.addAdapter(this, \rawvalues, { | a ... values |
-				// values.postln;
-				{ a.listener.value = values.normalize; }.defer;
+				{
+					a.listener.value = ([-2.0, 2.0] ++ values).normalize[2..];
+				}.defer;
 			});
 			rawview.onClose = { | me |
-				// postf("% closed\n", me);
 				me.removeAdapter(this, \rawvalues);
 			};
+			filtview.addAdapter(this, \ctlvalues, { | a ... values |
+				{
+					a.listener.value = ([-2.0, 2.0] ++ values).normalize[2..];
+				}.defer;
+			});
+			filtview.onClose = { | me |
+				me.removeAdapter(this, \ctlvalues);
+			};
 			w.front;
-			// { w.postln } ! 10;
 		})
 	}
 }
