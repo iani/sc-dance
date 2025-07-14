@@ -5,16 +5,20 @@
 Avatar.default;
 // One can geta an avatar of a given name by running Avatar.new(<a name>);
 // For example:
-Avatar(\default); // get the default avatar
+Avatar(\default); // get Avatar named \default
+Avatar.default; // get the default Avatar.
 // Confirm:
 Avatar.default === Avatar(\default);
+
+//Note: You may change the default avatar to any other avatar.
+//See below.
 
 // 2. Creating other avatars
 // Get an avatar named "blueboy"
 Avatar(\blueboy);
 
 // 3. Making any avatar default:
-Avatar(\blueboy).makeDefault;
+Avatar(\blueboy).makeDefault; // Avatar \blueboy becomes default
 // Confirm:
 Avatar.default === Avatar(\blueboy);
 

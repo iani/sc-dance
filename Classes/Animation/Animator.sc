@@ -9,7 +9,6 @@ Animator {
 	var <>avatar, <task, <messages, <times = 0.03;
 	var <>filter;
 	var <msgDict, <ctlDict;
-	var <>publishRaw = true;
 	var <props;
 
 	*new { | avatar | ^this.newCopyArgs(avatar).init }
@@ -34,22 +33,24 @@ Animator {
 	play { this.start }
 	start {
 		task.stop;
+		avatar.disableRemote;
 		this.reset;
 		task = Task({
 			loop {
-				var raw, filtered;
-				raw = messages.next;
-				filtered = this.filterMessage(raw);
-				if (publishRaw) {
-					avatar publishValueArray: raw;
-				}{
-					avatar publishValueArray: filtered;
-				};
-				avatar.changed(\msg, filtered);
+				this filterAndPublish: messages.next;
 				times.next.wait;
 			};
 		});
 		task.start;
+	}
+
+	filterAndPublish { | message |
+		var raw, filtered;
+		raw = message;
+		filtered = this.filterMessage(raw);
+		avatar.publishValueArray(raw, \rawmsg);
+		avatar publishValueArray: filtered;
+		avatar.changed(\msg, filtered);
 	}
 
 	filterMessage { | argMessage | ^filter filter: argMessage; }

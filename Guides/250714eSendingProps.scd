@@ -35,3 +35,5 @@ Avatar.props.qx = 2pi;
 Avatar.props.qy = pi;
 Avatar.props.qz = -pi;
 Avatar.props.qw = 0.1;
+//Stop posting osc
+TraceOsc.disable;

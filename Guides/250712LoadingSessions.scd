@@ -15,19 +15,18 @@ Avatar(\blueboy).makeDefault;
 // Confirm:
 Avatar.default === Avatar(\blueboy);
 
-
-// One can make any avatar be default li
-// 2. Working with the default Avatar
+// 4. Working with the default Avatar
 // Sending a message to Avatar runs the corresponding method on
 // the default Avatar. For example:
 Avatar.load; // load the default session to the default avatar
 
-
 // Load a session from a path to Avatar.default:
-Avatar.load(<aPath>);
+Avatar.load(<aPath>); // substitute <aPath> with an existing path
+                   // on your computer.
 // Example:
 Avatar.load("/Users/iani/Library/Application Support/SuperCollider/Extensions/sc-dance/Data/Animations/250414_003102/");
-// Load a session from a path chosen by a FileDialog:
+
+// 5. Load a session from a path chosen by a FileDialog:
 
 //The default session path is given by:
 ScDanceSessions.defaultPath;

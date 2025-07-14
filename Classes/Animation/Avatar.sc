@@ -18,6 +18,7 @@ Avatar : NamedInstance {
 	classvar >localGodotAddr;
 	var <>sessionPath;
 	var <sessionData, <animator, <controller;
+	var <oscAddress = '/rokoko/'; // address for remote respnse
 
 	*localGodotAddr {
 		^localGodotAddr ?? { localGodotAddr = NetAddr("127.0.0.1", 22245); }
@@ -49,6 +50,20 @@ Avatar : NamedInstance {
 		animator = Animator(this);
 		controller = AnimationController().init(this);
 		this.load(argSessionPath ?? { ScDanceSessions.defaultPath });
+	}
+
+	// filter and relay messages received via OSC
+	enableRemote { | argOscAddress = '/rokoko/' |
+		oscAddress = argOscAddress;
+		this.stop; // stop playback from data;
+		OscControl.enable;
+		this.addAdapter(OscControl, oscAddress, { | a, msg |
+			animator filterAndPublish: msg;
+		});
+	}
+
+	disableRemote {
+		this.removeAdapter(OscControl, oscAddress);
 	}
 
 	*play { this.default.start }
@@ -163,8 +178,9 @@ Avatar : NamedInstance {
 	}
 
 	//----- Filters -----
-
+	// naming issue: Perhaps addCopyFilter is clearer?
 	addSimpleFilter { | jointName | this addFilterc: jointName }
+	addCopyFilter { | jointName | this addFilterc: jointName }
 	addFilterc { | jointName | // wcontrol values
 		this.addFilter(jointName, { | m, c | c })
 	}
@@ -193,10 +209,10 @@ Avatar : NamedInstance {
 		animator filterMessage: message;
 	}
 
-	publishValueArray { | argMsg |
+	publishValueArray { | argMsg, publishMsg = \rawValues |
 		// get numeric values from raw rokoko message
 		// and publish them with changed \values
-		this.changed(\rawvalues, sessionData.makeValueArray(argMsg))
+		this.changed(publishMsg, sessionData.makeValueArray(argMsg))
 	}
 
 	// =========== SYNTHS + Control (of controlbus) ============
