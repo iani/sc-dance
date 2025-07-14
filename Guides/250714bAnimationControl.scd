@@ -1,8 +1,14 @@
 // 月 14  7 2025 10:25
 // Control the animation with functions and synths
 
+// Preparation:
+// NOTE: To modify the animation through synths and functions,
+// the Server must be booted.
+// Run this line before starting the Animation session:
+Server.default.boot;
+
 // 1. Start a gui and animation and connect to godot:
-Avatar.valuesGui.play.sendToGodot;
+Avatar.valuesGui.sendToGodot.play;
 
 //: 2. Filter: Make hip y position follow the values of the control bus
 Avatar.addFilterc(\hipy);

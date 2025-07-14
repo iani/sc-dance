@@ -8,8 +8,14 @@ JointIO {
 		^this.newCopyArgs(joint, msgBus, ctlBus);
 	}
 
-	in { ^In.kr(ctlBus) }
-	rin { ^In.kr(msgBus) }
+	in { ^this.controlIn }
+	controlIn { ^In.kr(ctlBus) }
+
+	controlOut { | ugens | ^this.out(ugens) }
 	out { | ugens | ^Out.kr(ctlBus, ugens) }
-	rout { | ugens | ^Out.kr(msgBus, ugens) }
+
+	rin { ^this.avatarIn }
+	avatarIn { ^In.kr(msgBus) }
+	rout { | ugens | ^this.avatarOut(ugens) }
+	avatarOut { | ugens | ^Out.kr(msgBus, ugens) }
 }

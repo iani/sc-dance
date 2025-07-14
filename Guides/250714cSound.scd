@@ -1,12 +1,14 @@
 // 月 14  7 2025 11:25
 // Controling sound through animation
+// 0 Reminder: Boot the server before starting the session:
+Server.default.boot;
 
 // 1. Start animation and gui, send to Godot
-Avatar.valuesGui.play.sendToGodot;
+Avatar.valuesGui.sendToGodot.play;
 
 // 2. Start a sound controlled by hip z variable value
 // store it in \sndtest
-Avatar.addSynth(\sndtest, { SinOsc.ar(~hipz.rin.linlin(-2, 2, 400, 4000)) * 0.1});
+Avatar.addSynth(\sndtest, { SinOsc.ar(~hipz.avatarIn.linlin(-2, 2, 400, 4000)) * 0.1});
 // 3. Stop the sound stored in \sndtest
 Avatar.removeSynth(\sndtest);
 
@@ -16,7 +18,7 @@ Avatar.removeSynth(\sndtest);
 Avatar.addSynth(\sndtest, {
 	Mix(
 		[~hipx, ~hipy] collect: { | joint |
-			SinOsc.ar(joint.rin.linlin(-2, 2, 400, 4000))
+			SinOsc.ar(joint.avatarIn.linlin(-2, 2, 400, 4000))
 		}
 	).dup * 0.01;
 })
