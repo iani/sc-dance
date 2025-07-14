@@ -1,12 +1,12 @@
-#+title: 250711architecture Notes
+#+title: SC-Dance: A Library for Animation and Sonification via Networked Live Coding
 
-How Avatar works:
+* How Avatar works:
 
-: * instance variable "sessionData"
+** instance variable "sessionData"
 
 Instance variable "sessionData" loads osc data from sessions recorded from Rokoko.
 
-: * instance variable "animator"
+** instance variable "animator"
 
 Animator plays back data from sequences of messages received from sessionData, or from live input.
 
@@ -29,7 +29,7 @@ Avatar.addFilter(\hipx, { | msgVal, ctlVal |
 	msgVal + ctlVal
 });
 #+end_src
-* instance variable =controller=
+** instance variable =controller=
 
 Instance variable =controller= contains an instance of AnimationController.
 
@@ -49,14 +49,15 @@ Animation messages can be produced from 2 sources:
 
    The Animator instance plays back sequences of messages loaded from file. Per default it loops through these messages in series, at a rate of 30 frames per second.  One can change both the message order and the time interval by setting the instance variables messages and times to patterns.
 
- 2. Messages received from sclang via osc.  These messages must start with '/rokoko/' and must have a format compatible with the formats found in recorded sessions (See section about rokoko message format).
+2. Messages received from sclang via OSC.  These messages must start with '/rokoko/' and must have a format compatible with the formats found in recorded sessions (See section about rokoko message format).
 
 ** Modifying animation messages
 
 Animation messages can be modified before sendint them to GODOT or using them for sound.  This is done by functions stored inside instances of JointFilter.
 Each element in an animation message array can have its own JointFilter.  The JointFilter instance calls the function stored in its instance variable =func=, passing it as arguments:
+
 1. The value of the message at the position corresponding to the filter.
-2. The value of the control bus the position corresponding to the filter.
+2. The value of the control bus at the position corresponding to the filter.
 
 ** Interaction with the synth engine (scsynth)
 
@@ -64,3 +65,5 @@ Interaction with the synth engine is done via 2 buses contained in instance vari
 
 1. =ctlbus=: This bus contains values that can be changed by the user either through a set message or by a synth that is writing to them. AnimationController polls =ctlbus= 30 frames per second, and stores its values in instance variable =ctlvalues= of AnimationController. From there, instances of JointFilter can use these values to modify the incoming message values according to the filter function provided by the user.
 2. =animbus=: This bus contains the values of each animation message received either from Animator or remotely via OSC.
+
+   The control signals of =animbus= can be used to drive sound animation.

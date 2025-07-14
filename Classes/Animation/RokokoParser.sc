@@ -24,15 +24,6 @@ RokokoParser {
 		message = argMessage;
 		newSymbols = message.select({|x| x isKindOf: Symbol });
 		i = newSymbols collect: { | s | message indexOf: s };
-		// "DEBUGGING FORMAT CHANGE".postln;
-		// postf("old indices: \n%\nnew indices\n%\n", indices, i);
-		// postf("are indices NOT equal? %\n", indices != i);
-		// postf("old symbols: \n%\nnew symbols%\n",
-		// 	symbols, newSymbols);
-		// postf("are symbols NOT equal? %\n", symbols != newSymbols);
-		// postf("If either, then i should update: %\n\n",
-		// 	(i != indices) or: { newSymbols != symbols }
-		// );
 		if ((i != indices) or: { newSymbols != symbols }) {
 			"Message format has changed. Updating!".postln;
 			indices = i;
