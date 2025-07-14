@@ -9,12 +9,14 @@ TraceOsc : NamedInstance {
 	var <>excludeServerMessages = true;
 	enableOsc { this.enable }
 	disableOsc { this.disable }
-	enable { OscControl addDependant: this; }
+	enable { OscControl.enable addDependant: this; }
 	disable { OscControl removeDependant: this; }
 	update { | time, addr, msg |
+		// [time, addr, msg, "DEBUGGING"].postln;
 		if (excludeServerMessages and: {
 			excludedMessages includes: msg[0]
 		}) { 	//  skip excluded message
+			// "I excluded".postln;
 		}{
 			[time, addr, msg].postln;
 		}

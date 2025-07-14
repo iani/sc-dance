@@ -67,3 +67,22 @@ Interaction with the synth engine is done via 2 buses contained in instance vari
 2. =animbus=: This bus contains the values of each animation message received either from Animator or remotely via OSC.
 
    The control signals of =animbus= can be used to drive sound animation.
+
+* Setting properties (position, color, etc)
+
+Properties are an additional protocol that is sent in a separate OSC message.
+The message format is:
+
+['/rokoko/props/', r, g, b, type, posx, posy, posz, qx, qy, qz, qw]
+
+For the meanings of the above refer to this json format definition from the Rokoko website:
+
+#+begin_example
+{
+name: "Box1",
+color: {r, g, b} // bytes
+type: 0/1/2 // 0: box, 1: stick, 2: camera
+position: {x: 0, y: 0, z: 0}, // Y-up, Z-forward
+rotation: {x: 0, y: 0, z: 0, w: 1}, // quaternion
+}
+#+end_example

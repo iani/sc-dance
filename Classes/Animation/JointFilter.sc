@@ -18,8 +18,14 @@
 // f.filter(1); // function f.filter returns the input
 // g.filter(1); // nil.filter also returns the input
 
-JointFilter {
-	var <>func, <>controls, <>index = 0, <joint;
+BasicFilter {
+	var <>func;
+	*new { | func | ^this.newCopyArgs(func) }
+	filter { ^func.value }
+}
+
+JointFilter : BasicFilter {
+	var <>controls, <>index = 0, <joint;
 
 	*new { | func, controls, index, joint |
 		^this.newCopyArgs(func, controls, index, joint);

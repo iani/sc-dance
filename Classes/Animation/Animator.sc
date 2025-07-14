@@ -9,10 +9,13 @@ Animator {
 	var <>avatar, <task, <messages, <times = 0.03;
 	var <>filter;
 	var <msgDict, <ctlDict;
+	var <>publishRaw = true;
+	var <props;
 
 	*new { | avatar | ^this.newCopyArgs(avatar).init }
 
 	init {
+		props = Props(avatar);
 		this.addAdapter(avatar, \messageFormat, { | a, parser |
 			msgDict = parser.msgDict;
 			ctlDict = parser.ctlDict;
@@ -20,7 +23,10 @@ Animator {
 		})
 	}
 
-	resetFilters { filter = { nil } ! avatar.messageSize; }
+	resetFilters {
+		filter = { nil } ! avatar.messageSize;
+		filter[2] = BasicFilter(Avatar.name);
+	}
 
 	messages_ { | argMessages | messages = argMessages.asStream }
 	times_ { | argTimes | times = argTimes.asStream }
@@ -31,20 +37,22 @@ Animator {
 		this.reset;
 		task = Task({
 			loop {
-				var m;
-				m = messages.next;
-				avatar publishValueArray: m;
-				avatar.changed(\msg, this.filterMessage(m));
+				var raw, filtered;
+				raw = messages.next;
+				filtered = this.filterMessage(raw);
+				if (publishRaw) {
+					avatar publishValueArray: raw;
+				}{
+					avatar publishValueArray: filtered;
+				};
+				avatar.changed(\msg, filtered);
 				times.next.wait;
 			};
 		});
 		task.start;
 	}
 
-	filterMessage { | argMessage |
-		^filter filter: argMessage;
-	}
-
+	filterMessage { | argMessage | ^filter filter: argMessage; }
 	stop { task.stop; this.reset; }
 	pause { task.pause }
 	resume { task.resume }

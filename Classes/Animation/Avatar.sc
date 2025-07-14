@@ -103,7 +103,6 @@ Avatar : NamedInstance {
 	msgStream {}
 	timeStream {}
 
-
 	//----- adding/removing OSC receivers-----
 	addReceiver { | netAddr | // asSymbol: guarante matching
 		// IMPORTANT: if netAddr is local addr, then replace
@@ -113,16 +112,23 @@ Avatar : NamedInstance {
 			netAddr.asSymbol.addAdapter(this, \msg, { | a ... msg |
 				msg[0] = '/r';
 				netAddr.sendMsg(*msg);
-			})
+			});
+			netAddr.asSymbol.addAdapter(this, \props, { | a ... msg |
+				msg[0] = '/p';
+				netAddr.sendMsg(*msg);
+			});
 		}{
 			netAddr.asSymbol.addAdapter(this, \msg, { | a ... msg |
 				netAddr.sendMsg(*msg);
-			})
+			});
+			netAddr.asSymbol.addAdapter(this, \props, { | a ... msg |
+				netAddr.sendMsg(*msg);
+			});
 		}
-;
 	}
 	deleteReceiver { | netAddr |
 		netAddr.asSymbol.removeAdapter(this, \msg);
+		netAddr.asSymbol.removeAdapter(this, \props);
 	}
 
 	sendToSelf { | flag = true |
@@ -142,6 +148,20 @@ Avatar : NamedInstance {
 	}
 
 	localGodot { ^this.class.localGodotAddr }
+
+	//----- Props -----
+	props { ^animator.props }
+	setColor { | argr, argg, argb | animator.props.setColor(argr, argg, argb) }
+	setType { | argType | animator.props.setType(argType) }
+	setPos { | argx, argy, argz | animator.props.setPos(argx, argy, argz) }
+	setRot { | argqx, argqy, argqz, argqw |
+		animator.props.setRot(argqx, argqy, argqz, argqw);
+	}
+
+	setPosRot { | argx, argy, argz, argqx, argqy, argqz, argqw |
+		animator.props.setPosRot(argx, argy, argz, argqx, argqy, argqz, argqw);
+	}
+
 	//----- Filters -----
 
 	addFilterc { | jointName | // wcontrol values

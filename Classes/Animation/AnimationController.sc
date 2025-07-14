@@ -17,7 +17,6 @@ AnimationController {
 	init { | argAvatar |
 		avatar = argAvatar;
 		ctlvalues = List();
-		// this.reset(avatar.parser);
 		this.addAdapter(avatar, \messageFormat, { | adapter, parser |
 			this.reset(parser);
 		})
