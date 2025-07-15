@@ -66,14 +66,10 @@ Avatar : NamedInstance {
 		this.removeAdapter(OscControl, oscAddress);
 	}
 
-	*play { this.default.start }
-	*start { this.default.start }
-	*stop { this.default.stop }
-	*pause { this.default.pause }
-	*resume { this.default.resume }
-	*reset { this.default.reset }
 
-	start { this.play }
+	*start { this.default.start }
+	*play { this.default.play }
+	start { this.play } // Synonym. Implamenttation may change in the future
 	play {
 		if (sessionData.isNil) {
 			^"Cannot play without data. Load a session.".postln;
@@ -82,11 +78,18 @@ Avatar : NamedInstance {
 		controller.play;
 	}
 
+	*stop { this.default.stop }
 	stop {
 		animator.stop;
 		controller.stop;
 	}
 
+	*pause { this.default.pause }
+	pause { animator.pause }
+	*resume { this.default.resume }
+	resume { animator.resume }
+	*reset { this.default.reset }
+	reset { animator.reset }
 	loadNamed { | sessionName |
 		this load: RokokoSessionsBookmark.allSessionsDict[sessionName]
 	}
@@ -112,6 +115,7 @@ Avatar : NamedInstance {
 		messages = sessionData.messages;
 			postf("\Loaded % messages\n", messages.size;
 		);
+		animator.message = messages.first;
 		animator.messages = messages.pseq;
 	}
 

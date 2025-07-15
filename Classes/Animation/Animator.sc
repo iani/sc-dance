@@ -6,7 +6,7 @@
 //:Note: dictionaris are created when obtaining the first message.
 
 Animator {
-	var <>avatar, <task, <messages, <times = 0.03;
+	var <>avatar, <task, <messages, <>message, <times = 0.03;
 	var <>filter;
 	var <msgDict, <ctlDict;
 	var <props;
@@ -27,7 +27,8 @@ Animator {
 		filter[2] = BasicFilter(avatar.name);
 	}
 
-	messages_ { | argMessages | messages = argMessages.asStream }
+	messages_ { | argMessages | messages = argMessages.asStream; }
+
 	times_ { | argTimes | times = argTimes.asStream }
 
 	play { this.start }
@@ -37,16 +38,17 @@ Animator {
 		this.reset;
 		task = Task({
 			loop {
-				this filterAndPublish: messages.next;
+				// this filterAndPublish: messages.next;
+				message = messages.next;
 				times.next.wait;
 			};
 		});
 		task.start;
 	}
 
-	filterAndPublish { | message |
+	filterAndPublish { | argMessage |
 		var raw, filtered;
-		raw = message;
+		raw = argMessage;
 		filtered = this.filterMessage(raw);
 		avatar.publishValueArray(raw, \rawmsg);
 		avatar publishValueArray: filtered;

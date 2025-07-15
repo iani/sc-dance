@@ -18,3 +18,5 @@ TraceOsc.enable;
 TraceOsc.disable;
 // 5. Send to godot on local machine
 Avatar.sendToGodot;
+Avatar.pause;
+Avatar.resume;

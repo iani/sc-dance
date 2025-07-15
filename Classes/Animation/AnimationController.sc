@@ -49,6 +49,9 @@ AnimationController {
 				ctlbus.getn(ctlbus.numChannels, { | values |
 					ctlvalues.array = values;
 					avatar.changed(\ctlvalues, values);
+					avatar.animator.filterAndPublish(
+						avatar.animator.message;
+					);
 				});
 				30.reciprocal.wait;
 			}
