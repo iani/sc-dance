@@ -119,8 +119,9 @@ Avatar : NamedInstance {
 		animator.messages = messages.pseq;
 	}
 
-	msgStream {}
-	timeStream {}
+	// for initializing / resetting?
+	msgStream {} // ???
+	timeStream {} // ???
 
 	//----- adding/removing OSC receivers-----
 	addReceiver { | netAddr | // asSymbol: guarante matching
@@ -181,10 +182,23 @@ Avatar : NamedInstance {
 		animator.props.setPosRot(argx, argy, argz, argqx, argqy, argqz, argqw);
 	}
 
-	//----- Filters -----
+	//----- Filters, joint access -----
 	// naming issue: Perhaps addCopyFilter is clearer?
-	addSimpleFilter { | jointName | this addFilterc: jointName }
+	jointNames { ^this.parser.ctlNames }
+	filter { ^animator.filter }
 	addCopyFilter { | jointName | this addFilterc: jointName }
+	// Shortcut:
+	addCopySynth { | jointName, func |
+		this addCopyFilter: jointName;
+		controller.synths[jointName].free;
+		controller.synths[jointName] = {
+			controller.ioEnvir[jointName].out(func.value)
+		}.play;
+		// this.addSynth(jointName, {
+		// 	controller.ioEnvir[jointName].out(func.value)
+		// });
+	}
+	addSimpleFilter { | jointName | this addFilterc: jointName }
 	addFilterc { | jointName | // wcontrol values
 		this.addFilter(jointName, { | m, c | c })
 	}
@@ -222,6 +236,12 @@ Avatar : NamedInstance {
 	// =========== SYNTHS + Control (of controlbus) ============
 
 	addSynth { | key, synthFunc | controller.addSynth(key, synthFunc) }
+	removeSynths { | ... keys |
+		var synths;
+		synths = controller.synths;
+		if (keys.size == 0) { keys = synths.keys.asArray };
+		keys do: { | key | this removeSynth: key };
+	}
 	removeSynth { | key | controller.removeSynth(key) }
 	setctl { | key, value | controller.setctl(key, value); }
 	ctloffset { | key | ^this.parser.ctlDict[key] }

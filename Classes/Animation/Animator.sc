@@ -73,7 +73,7 @@ Animator {
 	}
 
 	removeFilter { | joint |
-		filter[msgDict[joint]] = nil;
+		msgDict[joint] !? { filter[msgDict[joint]] = nil; }
 	}
 
 	// remove all filters

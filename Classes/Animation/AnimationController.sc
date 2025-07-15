@@ -12,11 +12,12 @@ AnimationController {
 	var <animbus;
 	var <ctlPollRoutine;
 	var <ioArray, <ioEnvir;
-	var <>avatar, synths;
+	var <>avatar, <synths;
 
 	init { | argAvatar |
 		avatar = argAvatar;
 		ctlvalues = List();
+		synths = IdentityDictionary();
 		this.addAdapter(avatar, \messageFormat, { | adapter, parser |
 			this.reset(parser);
 		})
@@ -74,11 +75,10 @@ AnimationController {
 		synths[key] = ioEnvir use: { synthFunc.play; };
 	}
 
-	synths { ^synths ?? { synths = IdentityDictionary(); } }
-
 	removeSynth { | key |
 		this.synths[key].free;
 		synths[key] = nil;
+		avatar removeFilter: key;
 	}
 
 	setctl { | key, value |
