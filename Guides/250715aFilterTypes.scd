@@ -24,6 +24,7 @@ Avatar.addCopySynth(\hipqx, { SinOsc.kr(0.2) / 2 }); // rotate hip @ x axis
 Avatar.addCopySynth(\hipqz, { SinOsc.kr(0.2) / 2 }); // rotate hip @ z axis
 Avatar.addCopySynth(\hipqw, { SinOsc.kr(0.2) / 50 }); // rotate hip @ z axis
 
+//:LFnoise0 has more freedom - like dance
 Avatar.addCopySynth(\hipqx, { LFNoise1.kr(1) }); // rotate hip @ x axis
 Avatar.addCopySynth(\hipqy, { LFNoise1.kr(1) }); // rotate hip @ x axis
 Avatar.addCopySynth(\hipqz, { LFNoise1.kr(1) }); // rotate hip @ x axis
@@ -33,8 +34,11 @@ Avatar.removeSynth(\hipqx);
 
 Avatar.removeSynths; // remove several synths. if none are given, remove all
 
+Avatar.removeFilters;
+
+Avatar.pause;
 //:
-//:
+//:Set values in a loop - instead of synths:
 fork {
 	(1..200).normalize.mirror do: { | i |
 		Avatar.addFilter(\hipqx, (i.postln * 2).postln);
@@ -42,23 +46,7 @@ fork {
 	};
 	"DONE".postln;
 }
-//:
-fork {
-	(1..100).normalize(-1.0, 1.0) do: { | i |
-		Avatar.addFilter(\hipqx, (i.postln * 2).postln);
-		1.wait;
-	};
-	"DONE".postln;
-};
-//:
-fork {
-	(1..100).normalize(-1.0, 1.0) do: { | val |
-		Avatar.addFilter(\hipx, val);
-		0.03.wait;
-	}
-	"DONE".postln;
-}
-//:
+//:Test all joints in a row - many joints have no effect
 fork {
 	Avatar.jointNames do: { | joint |
 		postf("Testing joint: %\n", joint);
@@ -71,16 +59,15 @@ fork {
 	};
 	"DONE".postln;
 };
-//:
+//: Yoga hallucination
 Avatar.jointNames do: { | joint |
 	Avatar.addCopySynth(joint, { LFNoise1.ar(0.1 rrand: 0.11) / 2  })
 };
 Avatar.addCopySynth(\hipy, { SinOsc.ar(0.2).range(1, 1.01) });
-//:
-
-
-
-(1..10).mirror;
+//:To stop all synths and remove all filters:
+Avatar.removeSynths;
+//:To remove all filters without stopping the synths:
+Avatar.removeFilters;
 
 //:
 //:Rotate:
@@ -107,3 +94,11 @@ Avatar.removeFilter(\hipy);
 Avatar.addSumFilter
 
 (1..100).normalize.sin;;
+
+Avatar.pause;
+
+Avatar.animator.task.isPlaying;
+Avatar.animator.task.pause;
+
+Avatar.stop;
+Avatar.play;

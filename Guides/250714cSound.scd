@@ -1,7 +1,7 @@
 // 月 14  7 2025 11:25
 // Controling sound through animation
 // 0 Reminder: Boot the server before starting the session:
-Server.default.boot;
+Server.default.reboot;
 
 // 1. Start animation and gui, send to Godot
 Avatar.valuesGui.sendToGodot.play;
@@ -34,7 +34,7 @@ Avatar.addSynth(\sndtest, {
 	src = (i .. i + (n - 1)) collect: { | c |
 		SinOsc.ar(In.kr(c).linlin(-2, 2, 400, 4000))
 	};
-	Mix(src).dup * 0.1 / src.size;
+	Mix(src).dup * 0.5 / src.size;
 });
 )
 //:

@@ -50,8 +50,8 @@ Animator {
 		var raw, filtered;
 		raw = argMessage;
 		filtered = this.filterMessage(raw);
-		avatar.publishValueArray(raw, \rawmsg);
-		avatar publishValueArray: filtered;
+		avatar.publishValueArray(\rawValues, raw);
+		avatar.publishValueArray(\filteredValues, filtered);
 		avatar.changed(\msg, filtered);
 	}
 

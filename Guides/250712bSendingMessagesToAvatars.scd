@@ -4,6 +4,9 @@
 // Sending a message to Avatar performs the instance method
 // on the default avatar.
 Avatar.play; // start the default avatar
+//:To send to godot on your local computer run this:
+Avatar.sendToGodot;
+//:
 Avatar.stop; // stop the default avatar;
 
 // 2. Sending messages to an avatar with custom name

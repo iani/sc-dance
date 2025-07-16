@@ -10,7 +10,7 @@
 AnimationController {
 	var <ctlbus, <ctlvalues;
 	var <animbus;
-	var <ctlPollRoutine;
+	var <pollTask;
 	var <ioArray, <ioEnvir;
 	var <>avatar, <synths;
 
@@ -45,25 +45,26 @@ AnimationController {
 	}
 
 	play {
-		ctlPollRoutine = fork {
+		pollTask = Task({
 			loop {
 				ctlbus.getn(ctlbus.numChannels, { | values |
 					ctlvalues.array = values;
-					avatar.changed(\ctlvalues, values);
+					avatar.changed(\ctlValues, values);
 					avatar.animator.filterAndPublish(
 						avatar.animator.message;
 					);
 				});
 				30.reciprocal.wait;
 			}
-		};
-		this.addAdapter(avatar, \rawvalues, { | a ... vals |
+		});
+		pollTask.play;
+		this.addAdapter(avatar, \rawValues, { | a ... vals |
 			animbus.setn(vals);
 		});
 		CmdPeriod add: this;
 	}
 	stop {
-		ctlPollRoutine.stop;
+		pollTask.stop;
 		CmdPeriod remove: this;
 	}
 	doOnCmdPeriod { /* this.play */ /* MAYBE??? */ }

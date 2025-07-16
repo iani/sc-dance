@@ -1,0 +1,12 @@
+#+title: 250715 Towards1st Demo
+
+* 火 15  7 2025 21:04: Fix start, synths and msg value gui display
+
+** 1st Priority - relates to valuesGui and sound below: Check how messages set msg bus
+
+Probably refixing msg routine I left out the statement that set the msgbus with the message values.  New feature idea: Add option for switching between setting the message bus with the unfiltered *or* the filtered messages.
+
+** Start: Add removeSynths, removeFilters
+** Maybe new method: Avatar.removeCtls (shortcut for removeSynths, removeFilters)? Check!!!
+** Fix Avatar.valuesGui: msg values do not update
+** Fix Avatar.addSynth with sound funcs. They don't seem to get msg bus controls.

@@ -25,6 +25,10 @@ Avatar.loadDialog;
 
 // 4. Load a session by the name of its folder
 Avatar.loadNamed(\speed_contrast);
+//: TO check, play the session to godot:
+Avatar.sendToGodot.play;
+//: stop:
+Avatar.stop;
 // To list the names of all sessions currently known to the system:
 Avatar.allSessionNames;
 // Example: Load a session chosen at random from all session names:

@@ -37,7 +37,7 @@ Avatar : NamedInstance {
 	}
 
 	addLocalSC {
-		this.addRaceiver(NetAddr.localAddr);
+		this.addReceiver(NetAddr.localAddr);
 	}
 
 	deleteLocalSC {
@@ -72,11 +72,18 @@ Avatar : NamedInstance {
 	start { this.play } // Synonym. Implamenttation may change in the future
 	play {
 		if (sessionData.isNil) {
-			^"Cannot play without data. Load a session.".postln;
+			^postf("% cannot play without data. Load a session.\n", this);
 		};
+		if (this.isPlaying) {
+			^postf("% is already playing. Will not restart.\n", this);
+		};
+		this.reset;
 		animator.play;
 		controller.play;
 	}
+
+	*isPlaying { ^this.default.isPlaying }
+	isPlaying { ^controller.pollTask.isPlaying }
 
 	*stop { this.default.stop }
 	stop {
@@ -89,7 +96,11 @@ Avatar : NamedInstance {
 	*resume { this.default.resume }
 	resume { animator.resume }
 	*reset { this.default.reset }
-	reset { animator.reset }
+	reset {
+		this.removeSynths;
+		this.removeFilters;
+		animator.reset;
+	}
 	loadNamed { | sessionName |
 		this load: RokokoSessionsBookmark.allSessionsDict[sessionName]
 	}
@@ -227,7 +238,7 @@ Avatar : NamedInstance {
 		animator filterMessage: message;
 	}
 
-	publishValueArray { | argMsg, publishMsg = \rawValues |
+	publishValueArray { | publishMsg, argMsg |
 		// get numeric values from raw rokoko message
 		// and publish them with changed \values
 		this.changed(publishMsg, sessionData.makeValueArray(argMsg))
@@ -260,21 +271,21 @@ Avatar : NamedInstance {
 			);
 			rawview.thumbSize = 3;
 			filtview.thumbSize = 3;
-			rawview.addAdapter(this, \rawvalues, { | a ... values |
+			rawview.addAdapter(this, \rawValues, { | a ... values |
 				{
 					a.listener.value = ([-2.0, 2.0] ++ values).normalize[2..];
 				}.defer;
 			});
 			rawview.onClose = { | me |
-				me.removeAdapter(this, \rawvalues);
+				me.removeAdapter(this, \rawValues);
 			};
-			filtview.addAdapter(this, \ctlvalues, { | a ... values |
+			filtview.addAdapter(this, \ctlValues, { | a ... values |
 				{
 					a.listener.value = ([-2.0, 2.0] ++ values).normalize[2..];
 				}.defer;
 			});
 			filtview.onClose = { | me |
-				me.removeAdapter(this, \ctlvalues);
+				me.removeAdapter(this, \ctlValues);
 			};
 			w.front;
 		})
