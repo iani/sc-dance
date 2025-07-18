@@ -6,6 +6,7 @@ Avatar.loadNamed(\fidgety_introvert).sendToGodot.play;
 Avatar.pause; // stop playback
 Avatar.resume; // resume playback from the last paused frame
 Avatar.play; // restart from the beginning
+Avatar.stop; // Stop playing the avatar
 //2. Changing a joint value with filters.
 //A filter modifies a slot in the message array before sending.
 //The function of the filter returns the value for that slot.
@@ -102,3 +103,7 @@ Avatar.animator.task.pause;
 
 Avatar.stop;
 Avatar.play;
+
+t = Avatar.controller.pollTask;
+t.isPlaying;
+t.isRunning;

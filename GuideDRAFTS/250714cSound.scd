@@ -39,3 +39,5 @@ Avatar.addSynth(\sndtest, {
 )
 //:
 Avatar.removeSynth(\sndtest);
+
+Avatar.removeSynths;

@@ -70,7 +70,7 @@ AnimationController {
 	doOnCmdPeriod { /* this.play */ /* MAYBE??? */ }
 
 	// =========== SYNTHS and Control ============
-
+	jointIO { | joint | ^ioEnvir[joint] }
 	addSynth { | key, synthFunc |
 		this.removeSynth(key);
 		synths[key] = ioEnvir use: { synthFunc.play; };

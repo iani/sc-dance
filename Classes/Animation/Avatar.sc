@@ -194,12 +194,12 @@ Avatar : NamedInstance {
 	}
 
 	//----- Filters, joint access -----
-	// naming issue: Perhaps addCopyFilter is clearer?
 	jointNames { ^this.parser.ctlNames }
+	jointIO { | joint | ^controller.jointIO(joint) }
 	filter { ^animator.filter }
 	addCopyFilter { | jointName | this addFilterc: jointName }
-	// Shortcut:
-	addCopySynth { | jointName, func |
+	// Shortcuts:
+	addSetSynth { | jointName, func |
 		this addCopyFilter: jointName;
 		controller.synths[jointName].free;
 		controller.synths[jointName] = {
@@ -266,8 +266,7 @@ Avatar : NamedInstance {
 			w.bounds = Rect(0, 0, 1300, 200);
 			w.layout = HLayout(
 				~rawview = rawview = MultiSliderView(),
-				~filtview =
-				filtview = MultiSliderView()
+				~filtview = filtview = MultiSliderView()
 			);
 			rawview.thumbSize = 3;
 			filtview.thumbSize = 3;
