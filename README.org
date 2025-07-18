@@ -1,5 +1,4 @@
 #+title: Readme
 
-This is a remake from scratch of the library for networked live coding for dance and animation.  It is based on the experience of sc-hacks-redux. The goal is to create a cleaner basis that is easier to study and use.
-
-木 26  6 2025 14:15
+This is a supercollider library networked live coding for dance and animation.
+Documentation is found in folder ./Guides
