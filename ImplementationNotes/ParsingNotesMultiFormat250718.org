@@ -1,0 +1,22 @@
+#+title: Parsing Notes Multi Format250718
+
+* For each joint - variable naming alternatives
+
+** 1. Variable names (\x, \y, etc)
+** 2. Indices (0, 1, 2, etc)
+** 3. Group the buses of each joint in one object.
+
+* Use a canonical list of joint names
+
+Define the list. (eg. based on Rokoko)
+Define mappings of different lists (eg Yolo) to the canonical list.
+
+Group the input values belonging to each joint into that joint.
+
+* Define different osc messages that send single joints
+
+* Prototype for a single-joint-sending protocol (see current GODOT protocol)
+
+Use GODOT protocol of current version as starting point.
+
+[/godot/hip/angle/.../ x, y, z, ... ]

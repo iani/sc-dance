@@ -5,6 +5,20 @@ Avatar.loadNamed(\speed_contrast).valuesGui.sendToGodot.play;
 //:Double check joint names:
 Avatar.jointNames;
 //:add a sound sonifying slope of head rotation x
+Avatar.addCopySynth(\hipqy, { SinOsc.kr(0.2) / 2 }); // rotate hip @ y axis
+//:The same with addSynth:
+Avatar.addSynth(\hipqy, {
+	~hipqy.out(SinOsc.kr(0.2) / 2)
+}); // rotate hip @ y axis
+//:Access to message busses and control busses
+// Each joint variable is available as environment variable.
+// List available joint variables:
+Avatar.jointNames;
+// each joint environment variable contains both the control bus
+// and the animation bus:
+
+
+//:
 Avatar.addSynth(\headqx, {
 	var qx;
 	qx = ~leftUpperArmqx.avatarIn.lag(1.5);

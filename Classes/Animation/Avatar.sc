@@ -194,35 +194,24 @@ Avatar : NamedInstance {
 	}
 
 	//----- Filters, joint access -----
-	jointNames { ^this.parser.ctlNames }
+	ctlNames { ^this.parser.ctlNames }
+	jointNames { ^this.parser.jointNames }
 	jointIO { | joint | ^controller.jointIO(joint) }
 	filter { ^animator.filter }
-	addCopyFilter { | jointName | this addFilterc: jointName }
 	// Shortcuts:
 	addSetSynth { | jointName, func |
 		this addCopyFilter: jointName;
 		controller.synths[jointName].free;
 		controller.synths[jointName] = {
 			controller.ioEnvir[jointName].out(func.value)
-		}.play;
+		}.play();
 		// this.addSynth(jointName, {
 		// 	controller.ioEnvir[jointName].out(func.value)
 		// });
 	}
-	addSimpleFilter { | jointName | this addFilterc: jointName }
-	addFilterc { | jointName | // wcontrol values
-		this.addFilter(jointName, { | m, c | c })
-	}
-
-	addSumFilter { | jointName | this addFiltermpc: jointName }
-	addFiltermpc { | jointName | // wcontrol values
-		this.addFilter(jointName, { | m, c | m + c })
-	}
-
-	addProductFilter { | jointName | this addFiltermxc: jointName }
-	addFiltermxc { | jointName | // wcontrol values
-		this.addFilter(jointName, { | m, c | m * c })
-	}
+	addSetFilter { | jointName | this.addFilter(jointName, { | m, c | c }) }
+	addAddFilter { | jointName | this.addFilter(jointName, { | m, c | m + c }) }
+	addMulFilter { | jointName | this.addFilter(jointName, { | m, c | m * c }) }
 
 	addFilter { | jointName, func | animator.addFilter(jointName, func); }
 	removeFilter { | joint | animator removeFilter: joint }

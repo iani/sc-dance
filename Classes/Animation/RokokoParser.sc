@@ -9,11 +9,12 @@ RokokoParser {
 	var <>avatar; // notify avatar when format changes;
 	var <message;
 	var <symbols, <indices;
-	var <msgNames, <ctlNames;
+	var <jointNames, <msgNames, <ctlNames;
 	var <msgDict; // translate from joint name to index in rokoko message
 	var <ctlDict; // translate from joint name to index in bus/data array
 	var <jointOffset; // index of first joint
 	var <>firstJoint = \hip; // first joint in the msg array
+	var <joints; // vars grouped into joints
 
 	*new { | avatar |
 		^this.newCopyArgs(avatar);
@@ -34,7 +35,6 @@ RokokoParser {
 	}
 
 	makeDicts {
-		var jointNames;
 		jointNames = symbols[symbols indexOf: firstJoint..];
 		// postf("\n\n\n%\n\n\n", jointNames);
 		jointOffset = message indexOf: firstJoint;

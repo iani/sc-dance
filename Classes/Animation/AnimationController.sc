@@ -37,11 +37,15 @@ AnimationController {
 	}
 
 	makeIO { | parser |
+		var jointNames;
 		ioArray = parser.ctlNames collect: { | n, i |
 			JointIO(n, i + animbus.index, i + ctlbus.index);
 		};
 		ioEnvir = Event();
-		ioArray do: { | j | ioEnvir[j.joint] = j; }
+		ioArray do: { | j | ioEnvir[j.joint] = j; };
+		ioEnvir[\all] = ioArray;
+		jointNames = parser.jointNames;
+		ioArray.clump(7) do: { | a, i | ioEnvir[jointNames[i]] = a; }
 	}
 
 	play {
