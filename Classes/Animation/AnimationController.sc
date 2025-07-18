@@ -77,6 +77,7 @@ AnimationController {
 	jointIO { | joint | ^ioEnvir[joint] }
 	addSynth { | key, synthFunc |
 		this.removeSynth(key);
+		avatar addSetFilter: key;
 		synths[key] = ioEnvir use: { synthFunc.play; };
 	}
 

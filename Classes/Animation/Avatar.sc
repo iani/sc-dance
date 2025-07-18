@@ -193,30 +193,39 @@ Avatar : NamedInstance {
 		animator.props.setPosRot(argx, argy, argz, argqx, argqy, argqz, argqw);
 	}
 
-	//----- Filters, joint access -----
+	//----- joint and control access -----
 	ctlNames { ^this.parser.ctlNames }
 	jointNames { ^this.parser.jointNames }
 	jointIO { | joint | ^controller.jointIO(joint) }
 	filter { ^animator.filter }
-	// Shortcuts:
-	addSetSynth { | jointName, func |
-		this addCopyFilter: jointName;
-		controller.synths[jointName].free;
-		controller.synths[jointName] = {
-			controller.ioEnvir[jointName].out(func.value)
-		}.play();
-		// this.addSynth(jointName, {
-		// 	controller.ioEnvir[jointName].out(func.value)
-		// });
-	}
+	// Basic filter methods
+	addFilter { | jointName, func | animator.addFilter(jointName, func); }
+	getFilter { | joint | ^animator getFilter: joint }
+	removeFilter { | joint | animator removeFilter: joint }
+	removeFilters { | ... names | animator.removeFilters(names) }
+	// Function filter shortcuts
 	addSetFilter { | jointName | this.addFilter(jointName, { | m, c | c }) }
 	addAddFilter { | jointName | this.addFilter(jointName, { | m, c | m + c }) }
 	addMulFilter { | jointName | this.addFilter(jointName, { | m, c | m * c }) }
 
-	addFilter { | jointName, func | animator.addFilter(jointName, func); }
-	removeFilter { | joint | animator removeFilter: joint }
-	getFilter { | joint | ^animator getFilter: joint }
-	removeFilters { animator.removeFilters }
+	// Synth filter methods
+	addSynth { | jointName, func |
+		controller.addSynth(jointName, {
+			controller.ioEnvir[jointName].out(func.value)
+		});
+
+	}
+	// Shortcuts:
+	setSynth { | jointName, func |
+		controller.addSynth(jointName, func);
+		this addSetFilter: jointName;
+		controller.synths[jointName].free;
+		controller.synths[jointName] = {
+			controller.ioEnvir[jointName].out(func.value)
+		}.play();
+	}
+
+
 	ctlvalues { ^controller.ctlvalues }
 	ctlIndex { | joint | ^this.parser.ctlIndex(joint) }
 	messages { ^sessionData.messages }
@@ -235,7 +244,7 @@ Avatar : NamedInstance {
 
 	// =========== SYNTHS + Control (of controlbus) ============
 
-	addSynth { | key, synthFunc | controller.addSynth(key, synthFunc) }
+	// addSynth { | key, synthFunc | controller.addSynth(key, synthFunc) }
 	removeSynths { | ... keys |
 		var synths;
 		synths = controller.synths;

@@ -1,4 +1,6 @@
 #+title: Readme
 
 This is a supercollider library networked live coding for dance and animation.
-Documentation is found in folder [[file:./Guides][Guides]].
+The  library plays animations on GODOT. It is recommended to run GODOT on the same computer as SuperCollider and sc-dance.
+
+To try it out, clone the following repository inside the current projeccts folder of your GODOT application: [[https://github.com/iani/boy_and_birds][boy and birds]].  Open the Godot application and run the project boy_and_birds.  Then play line-by-line the [[file:./ExampleCode.scd][xample code]] provided here.
