@@ -10,6 +10,11 @@ PathBookmark : NamedInstance {
 	}
 
 	subfolders { | folder |
+		"Debugging PathBookmark subfolders".postln;
+		postf("folders of % are %\n",
+			(this.root +/+ folder +/+ ""),
+			(this.root +/+ folder +/+ "").folders
+		);
 		^(this.root +/+ folder +/+ "").folders collect: _.fullPath;
 	}
 
