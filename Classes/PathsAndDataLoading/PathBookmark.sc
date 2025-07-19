@@ -10,7 +10,7 @@ PathBookmark : NamedInstance {
 	}
 
 	subfolders { | folder |
-		^(this.root +/+ folder).folders collect: _.fullPath;
+		^(this.root +/+ folder +/+ "").folders collect: _.fullPath;
 	}
 
 	subsubfolders { | folder |
