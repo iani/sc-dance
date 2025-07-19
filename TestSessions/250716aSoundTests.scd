@@ -17,14 +17,25 @@ Avatar.jointNames;
 // each joint environment variable contains both the control bus
 // and the animation bus:
 
-
 //:
 Avatar.addSynth(\headqx, {
-	var qx;
-	qx = ~leftUpperArmqx.avatarIn.lag(1.5);
-	qx = Slope.kr(qx).abs;
-	SinOsc.ar(qx.linlin(0, 10, 200, 4000), 0, 0.1).dup;
+	// var qx, trig;
+	// qx = ~leftUpperArmqx;
+	// qx.postln;
+	// qx = qx.avatarIn.lag(1.5);
+	// qx.postln;
+	// qx = Slope.kr(qx).abs;
+	// trig = Trig1.kr(qx > 0.05) * 0.1;
+	// trig = Trig1.kr(Impulse.kr);
+	SinOsc.ar(400, 0, 0.5).dup;
+
+	//	.avatarIn.lag(1.5);
+	// qx = Slope.kr(qx).abs;
+	// SinOsc.ar(qx.linlin(0, 10, 200, 4000), 0, 0.1).dup;
+	// SinOsc.ar(400, 0, 0.1).dup
 });
+//:
+{ SinOsc.ar(400) }.play;
 //:add a sound sonifying slope of head rotation x
 Avatar.addSynth(\headqx, {
 	var qx, trig;

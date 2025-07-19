@@ -119,7 +119,13 @@ Avatar.setSynth(\rightHandqz, { SinOsc.kr(0.95) / 8 });
 Avatar.setSynth(\rightHandqx, { SinOsc.kr(0.95) / 8 });
 Avatar.setSynth(\rightHandqy, { SinOsc.kr(0.95) / 8 });
 //:
-Avatar.jointNames
+Avatar.jointNames;
+
+//: Debugging:
+
+Avatar.addSynth(\test, { SinOsc.ar(400) / 18 });
+
+
 //:Sound
 // TBD
 //:Trigger a sound for each joint,

@@ -15,7 +15,7 @@ RokokoSessionsBookmark : PathBookmark {
 			i.sessionsDict keysValuesDo: { | key, value |
 				dict[key] = value;
 			}
-		}
+		};
 		^dict;
 	}
 	*sessionGui {
