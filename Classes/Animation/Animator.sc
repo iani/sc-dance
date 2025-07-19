@@ -29,6 +29,8 @@ Animator {
 
 	messages_ { | argMessages | messages = argMessages.asStream; }
 
+	// { | argMessages | messages = argMessages.asStream; }
+
 	times_ { | argTimes | times = argTimes.asStream }
 
 	play { this.start }
@@ -63,7 +65,9 @@ Animator {
 
 	// ================== FILTERS ====================
 	addFilter { | joint, func |
-		filter[msgDict[joint]] = this.makeFilter(joint, func);
+		msgDict[joint] !? {
+			filter[msgDict[joint]] = this.makeFilter(joint, func);
+		}
 	}
 
 	getFilter { | joint | ^filter[msgDict[joint]] }

@@ -35,6 +35,26 @@ Avatar.addSynth(\headqx, {
 });
 //:add a sound sonifying slope of all joint variables individually
 Avatar.loadNamed(\speed_contrast).valuesGui.sendToGodot.play;
+//:Debugging
+Avatar.addSynth(\slopecluster161, {
+	var jvar, src, qx;
+	jvar = Avatar.controller.ioArray.reverse.first;
+	qx = jvar.avatarIn.lag(1.5);
+	SinOsc.ar(400, 0, 0.1).dup;
+	/*
+	collect: { | j, i |
+		var qx, trig, freq;
+		freq = i.linlin(0, 160, 100, 2000);
+		qx = j.avatarIn.lag(1.5);
+		qx = Slope.kr(qx).abs;
+		trig = Trig1.kr(qx > 0.5) * 0.01;
+		SinOsc.ar(freq, 0, Decay2.kr(trig) * 0.03).dup;
+	};
+	Mix(src).dup;
+	*/
+});
+
+//:
 Avatar.addSynth(\slopecluster161, {
 	var src;
 	src = Avatar.controller.ioArray.reverse collect: { | j, i |
