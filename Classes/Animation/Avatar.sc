@@ -224,7 +224,8 @@ Avatar : NamedInstance {
 			controller.ioEnvir[jointName].rout(func.value)
 		}.play;
 	}
-
+	// dangerous synonym?
+	removeCtl { | jointName | this removeSynth: jointName }
 
 	ctlvalues { ^controller.ctlvalues }
 	ctlIndex { | joint | ^this.parser.ctlIndex(joint) }
