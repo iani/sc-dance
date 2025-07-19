@@ -158,6 +158,7 @@ Avatar : NamedInstance {
 		}
 	}
 	deleteReceiver { | netAddr |
+		// TODO: remove adapter '/r', '/p' for localAddr
 		netAddr.asSymbol.removeAdapter(this, \msg);
 		netAddr.asSymbol.removeAdapter(this, \props);
 	}
@@ -216,13 +217,12 @@ Avatar : NamedInstance {
 	}
 	// Shortcuts:
 	// Better name: addCtl. Other variants: addSumCtl, addMulCtl
-	setSynth { | jointName, func |
-		controller.addSynth(jointName, func);
+	addCtl { | jointName, func |
 		this addSetFilter: jointName;
 		controller.synths[jointName].free;
 		controller.synths[jointName] = {
-			controller.ioEnvir[jointName].out(func.value)
-		}.play();
+			controller.ioEnvir[jointName].rout(func.value)
+		}.play;
 	}
 
 

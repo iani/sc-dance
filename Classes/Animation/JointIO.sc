@@ -12,10 +12,15 @@ JointIO {
 	controlIn { ^In.kr(ctlBus) }
 
 	controlOut { | ugens | ^this.out(ugens) }
-	out { | ugens | ^Out.kr(ctlBus, ugens) }
+	out { | ugens |
+		^Out.kr(ctlBus, ugens) }
 
-	rin { ^this.avatarIn }
+	rout { | ugens |
+		^Out.kr(ctlBus, ugens)
+	}
+
+	ain { ^this.avatarIn }
 	avatarIn { ^In.kr(msgBus) }
-	rout { | ugens | ^this.avatarOut(ugens) }
+	aout { | ugens | ^this.avatarOut(ugens) }
 	avatarOut { | ugens | ^Out.kr(msgBus, ugens) }
 }

@@ -7,7 +7,8 @@ ShowCode : NamedInstance {
 		Windows.makeWindow(this, \mainWindow, { | w |
 			var codeView;
 			w.name_("Code:").alwaysOnTop_(true);
-			w.bounds_(Window.bottomRight(1000, 250));
+			w.bounds_(
+				Window.bottomRight(870, 250).top_(250));
 			w.view.layout = VLayout(
 				codeView = TextView()
 			);

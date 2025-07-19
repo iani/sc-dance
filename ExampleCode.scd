@@ -1,6 +1,8 @@
 
 //Load default session to the default Avatar, open data gui, connect to GODOT, play:
-Avatar.load.sendToGodot.play;
+//:Boot servers
+s.boot; // Server must be booted to play Avatar!
+Avatar.load.valuesGui.sendToGodot.play; // connect to GODOT, show gui, start playing
 //Pause playing
 Avatar.pause;
 //Resume playing fd
@@ -14,6 +16,9 @@ Avatar.removeFilter(\hipy);
 //Add synth filter
 
 Avatar.addSynth(\hipy, { ~hipy.out(SinOsc.kr(0.3) / 3 + 1.25 )});
+
+//:stop the filter synth:
+Avatar.removeSynth(\hipy);
 //L shorter forms:
 Avatar.setSynth(\hipy, { SinOsc.kr(0.3) / 3 + 1.25 });
 Avatar.setSynth(\rightLegqx, { SinOsc.kr(0.3) / 4 });
@@ -26,6 +31,10 @@ Avatar.setSynth(\rightUpperArmqx, { SinOsc.kr(0.5) / 4 + 0.2});
 Avatar.setSynth(\rightLowerArmqz, { SinOsc.kr(0.5) / 4 });
 Avatar.setSynth(\chestqy, { SinOsc.kr(0.5) / 4 + 0.2 });
 Avatar.setSynth(\chestqx, { SinOsc.kr(0.5) / 4 });
+Avatar.setSynth(\headqx, { SinOsc.kr(0.5) / 4 });
+Avatar.setSynth(\headqy, { SinOsc.kr(0.5) / 4 });
+//:
+Avatar.resume;
 //Remove all synth filters
 Avatar.removeSynths;
 //:

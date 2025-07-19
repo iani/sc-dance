@@ -77,13 +77,13 @@ AnimationController {
 	jointIO { | joint | ^ioEnvir[joint] }
 	addSynth { | key, synthFunc |
 		this.removeSynth(key);
-		postf("Controller addSynth. ioEnvir: %\n", ioEnvir);
+		// postf("Controller addSynth. ioEnvir: %\n", ioEnvir);
 		avatar addSetFilter: key;
 		synths[key] = ioEnvir use: {
 			var thesynth;
-			"doing synthfunc!".postln;
+			// "doing synthfunc!".postln;
 			thesynth = synthFunc.play;
-			postf("The synth is: %\n", thesynth);
+			// postf("The synth is: %\n", thesynth);
 		};
 	}
 

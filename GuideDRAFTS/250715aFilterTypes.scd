@@ -60,12 +60,17 @@ fork {
 	};
 	"DONE".postln;
 };
+//:
+Avatar.ctlNames;
 //: Yoga hallucination
-Avatar.jointNames do: { | joint |
-	Avatar.addCopySynth(joint, { LFNoise1.ar(0.1 rrand: 0.11) / 2  })
+Avatar.ctlNames do: { | joint |
+	Avatar.setSynth(joint, { LFNoise1.ar(0.1 rrand: 2.11) / 2  })
 };
-Avatar.addCopySynth(\hipy, { SinOsc.ar(0.2).range(1, 1.01) });
+Avatar.setSynth(\hipy, { LFNoise0.ar(1).range(0.5, 2.01) });
 //:To stop all synths and remove all filters:
+//
+Avatar.addFilter(\hipy, 2);
+//:
 Avatar.removeSynths;
 //:To remove all filters without stopping the synths:
 Avatar.removeFilters;
