@@ -21,4 +21,8 @@ PathBookmark : NamedInstance {
 		};
 		^subsubfolders;
 	}
+
+	files { | folder |
+		^(this.root +/+ folder +/+ "*").pathMatch;
+	}
 }

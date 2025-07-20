@@ -36,13 +36,9 @@ RokokoParser {
 
 	makeDicts {
 		jointNames = symbols[symbols indexOf: firstJoint..];
-		// postf("\n\n\n%\n\n\n", jointNames);
 		jointOffset = message indexOf: firstJoint;
-		// message[jointOffset..].postln;
 		msgNames = this.makeMessageNames(jointNames);
 		ctlNames = this.makeBusNames(jointNames);
-		// postf("\n\n\nmsgNames:%\n\n\n", msgNames);
-		// postf("\n\n\nctlNames:%\n\n\n", ctlNames);
 		msgDict = IdentityDictionary();
 		msgNames do: { | n, i | msgDict[n] = i + jointOffset; };
 		ctlDict = IdentityDictionary();

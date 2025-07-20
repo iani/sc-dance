@@ -49,7 +49,7 @@ Avatar : NamedInstance {
 		sessionData = SessionData(argSessionPath, this);
 		animator = Animator(this);
 		controller = AnimationController().init(this);
-		this.load(argSessionPath ?? { ScDanceSessions.defaultPath });
+		this.load(argSessionPath ?? { ScDanceAssets.defaultPath });
 	}
 
 	// filter and relay messages received via OSC
@@ -116,7 +116,7 @@ Avatar : NamedInstance {
 	}
 	load { | path |
 		var messages;
-		path ?? { path = ScDanceSessions.defaultPath };
+		path ?? { path = ScDanceAssets.defaultPath };
 		sessionPath = path;
 		this.stop;
 		postf("Loading session data from\n%\ninto %\n",

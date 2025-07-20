@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="xarts"
+config/name="boy and birds"
 run/main_scene="res://demo.tscn"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.png"

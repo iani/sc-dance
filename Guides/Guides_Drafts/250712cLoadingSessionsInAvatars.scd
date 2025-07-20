@@ -10,13 +10,13 @@ Avatar.load("/Users/iani/Library/Application Support/SuperCollider/Extensions/sc
 
 // 3. The default session path
 //The default session path is given by:
-ScDanceSessions.defaultPath;
+ScDanceAssets.defaultPath;
 //This is implemented as:
 // this.sessionsDict[this.sessionNames.first];
 // This is the first subfolder (alphabetically) of Data/Animations
 // folder in sc-dance library folder.
 //Load the default session into Avatar.default:
-Avatar.load(ScDanceSessions.defaultPath);
+Avatar.load(ScDanceAssets.defaultPath);
 //
 // 3. Load a session from a path chosen by a FileDialog:
 Avatar.loadDialog;
@@ -42,7 +42,7 @@ Avatar(\blueboy).load; // load the default session into Avatar \blueboy
 Avatar(\blueboy)
 .load("/Users/iani/Library/Application Support/SuperCollider/Extensions/sc-dance/Data/Animations/250414_003102/");
 //:Other examples
-Avatar(\blueboy).load(ScDanceSessions.defaultPath);
+Avatar(\blueboy).load(ScDanceAssets.defaultPath);
 Avatar(\blueboy).loadDialog;
 Avatar(\blueboy).loadNamed(\speed_contrast);
 Avatar(\blueboy) loadNamed: Avatar.allSessionNames.choose;

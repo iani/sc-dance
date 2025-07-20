@@ -1,6 +1,6 @@
 
-OscControl {
-
+OscControl : NamedInstance {
+	var localId;
 	*enable { thisProcess.recvOSCfunc = this }
 	*disable {
 		if { thisProcess.recvOSCfunc === this }{

@@ -1,8 +1,11 @@
 // 火 15  7 2025 10:08
 // Show evaluated code in a window.
+// 日 20  7 2025 16:02 Obsolete: Delegated to OscUser
 
 ShowCode : NamedInstance {
 
+	makeWindow { OscUser.makeWindow }
+	/*
 	makeWindow {
 		Windows.makeWindow(this, \mainWindow, { | w |
 			var codeView;
@@ -30,4 +33,5 @@ ShowCode : NamedInstance {
 	disable {
 		thisProcess.interpreter.preProcessor = nil;
 	}
+	*/
 }
