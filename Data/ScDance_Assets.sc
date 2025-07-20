@@ -3,7 +3,7 @@
 // It should not moved elsewhere.
 // See superclass Bookmark and its class methods for usage.
 
-ScDanceAssets : RokokoSessionsBookmark {
+ScDanceAssets : AvatarAssets {
 	var buffers;
 	*initClass {
 		ServerBoot add: { this.loadBuffers }

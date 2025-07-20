@@ -3,7 +3,8 @@ Avatar.load.valuesGui.sendToGodot.play;
 // ----------- Trying all 21 Joints with slope -----------
 //:post jointNames:
 Avatar.jointNames.clump(5) do: _.postln;
-Avatar.removeSynths;
+Avatar.jointNames.asCompileString;
+ScDanceAssets.buffers.keys.asArray.sort.asCompileString;
 //:Do each joint in turn:
 //: leftUpperArm - using slopePhrase with different mapping
 Avatar.addSynth(\hipslope, {

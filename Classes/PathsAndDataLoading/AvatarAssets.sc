@@ -2,7 +2,7 @@
 // Provide shared gui/api for handling path bookmarks for
 // Rokoko Session data
 
-RokokoSessionsBookmark : PathBookmark {
+AvatarAssets : PathBookmark {
 	var sessionsDict;
 	var >defaultPath;
 
