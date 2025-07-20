@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://qevod1r7yvhs"]
+
+[ext_resource type="PackedScene" uid="uid://dn0kpuucmufdc" path="res://assets/raven/raven.fbx" id="1_y0wi0"]
+
+[node name="raven" instance=ExtResource("1_y0wi0")]
+
+[node name="RAVEN humanrigV2" parent="." index="0"]
+transform = Transform3D(100, 0, 0, 0, -4.37114e-06, 100, 0, -100, -4.37114e-06, 0, 0, 0)

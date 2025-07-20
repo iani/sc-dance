@@ -1,0 +1,44 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="xarts"
+run/main_scene="res://demo.tscn"
+config/features=PackedStringArray("4.4", "Mobile")
+config/icon="res://icon.png"
+
+[audio]
+
+driver/enable_input=true
+
+[autoload]
+
+VmcPlugin="res://addons/godot_vmc_tracker/vmc_plugin.gd"
+RokokoPlugin="*res://addons/godot_rokoko_tracker/rokoko_plugin.gd"
+SCRokokoTrackerGlobal="*res://addons/god_sc_rokoko_tracker/sc_rokoko_tracker_global.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/god_sc_rokoko_tracker/plugin.cfg", "res://addons/godot_rokoko_tracker/plugin.cfg", "res://addons/repl/plugin.cfg")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_s3tc_bptc=true
+
+[rokoko_tracker]
+
+network/udp_listener_port=14044
+
+[sc_rokoko_tracker]
+
+network/udp_listener_port=22245
