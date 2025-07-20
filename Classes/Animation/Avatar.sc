@@ -211,8 +211,8 @@ Avatar : NamedInstance {
 	addMulFilter { | jointName | this.addFilter(jointName, { | m, c | m * c }) }
 
 	// Synth filter methods
-	addSynth { | jointName, func |
-		controller.addSynth(jointName, func);
+	addSynth { | jointName ... args |
+		controller.addSynth(jointName, *args);
 	}
 	// Shortcuts:
 	// Better name: putClt. Other variants: addSumCtl, addMulCtl
