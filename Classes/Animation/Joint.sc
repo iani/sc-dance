@@ -27,7 +27,7 @@ Joint {
 		| lothresh = 2, hithresh = 3, map1 = 1000, map2 = 200,
 		loLag = 1.5, hiLag = 0.1, slopeLag = 0.5, ampLag = 0.5  |
 
-		var inputs, slope, mappedSlope, slopePhrase;
+		var rawInputs, ampInputs, slope, mappedSlope, slopePhrase;
 		var lothreshCtl, hithreshCtl, map1Ctl, map2Ctl, loLagCtl, hiLagCtl, slopeLagCtl, ampLagCtl;
 
 		lothreshCtl = \lothresh.kr(lothresh);
@@ -39,14 +39,15 @@ Joint {
 		slopeLagCtl = \slopeLag.kr(slopeLag);
 		ampLagCtl = \ampLag.kr(ampLag);
 
-		inputs = vars collect: _.ain;
-		inputs = inputs collect: { | i |
-			Amplitude.kr(Slope.kr(i.lag(slopeLagCtl))).lag(ampLagCtl); };
-		slope = Mix(inputs);
+		rawInputs = vars collect: _.ain;
+		ampInputs = rawInputs collect: { | i |
+			Amplitude.kr(Slope.kr(i.lag(slopeLagCtl))).lag(ampLagCtl);
+		};
+		slope = Mix(ampInputs);
 		slopePhrase = (slope > lothreshCtl).lag(loLagCtl)
 		* (slope < hithreshCtl).lag(hiLagCtl) * slope;
 		mappedSlope = slope.linlin(0, hithreshCtl, map1Ctl, map2Ctl);
-		^[slopePhrase, mappedSlope];
+		^[slopePhrase, mappedSlope] ++ rawInputs ++ ampInputs;
 	}
 
 }

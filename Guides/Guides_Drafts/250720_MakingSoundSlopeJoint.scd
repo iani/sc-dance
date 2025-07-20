@@ -51,9 +51,18 @@ Avatar.addSynth(\leftUpperArmslope, {
 //: leftUpperArm - using slopePhrase with different mapping
 Avatar.addSynth(\leftLowerArmslope, {
 	var mul, val;
-	#mul, val = ~leftLowerArm.slopePhrase(map1: 300, map2: 180);
+	#mul, val = ~leftLowerArm.slopePhrase(map1: 1800, map2: 200);
 	SinOsc.ar(val).dup * mul * 0.1;
 });
+//:Tweak \leftLowerArmslope to make freq curve smoother
+Avatar.setSynthCtl(\leftLowerArmslope, \ampLag, 2);
+//: Tweak again - by adding lag inside the synthfunc
+Avatar.addSynth(\leftLowerArmslope, {
+	var mul, val;
+	#mul, val = ~leftLowerArm.slopePhrase(map1: 1800, map2: 200);
+	SinOsc.ar(val.lag(2)).dup * mul * 0.1;
+});
+
 //: leftUpperArm - using slopePhrase with different mapping
 Avatar.addSynth(\leftHandslope, {
 	var mul, val;
