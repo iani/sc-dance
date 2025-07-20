@@ -24,23 +24,23 @@ Avatar.removeSynth(\hipy);
 // Pause animation playback, to see control by synths only:
 Avatar.pause;
 // Add controls one-by-one (run one line at a time).
-Avatar.addCtl(\hipy, { SinOsc.kr(0.3) / 3 + 1.5 });
-Avatar.addCtl(\rightLegqx, { SinOsc.kr(0.3) / 4 });
-Avatar.addCtl(\rightUpLegqx, { SinOsc.kr(0.3) / 4 });
-Avatar.addCtl(\rightFootqx, { SinOsc.kr(0.3) / 4 });
-Avatar.addCtl(\leftLegqx, { SinOsc.kr(0.5) / 4 });
-Avatar.addCtl(\leftUpperArmqx, { SinOsc.kr(0.5) / 4 + 0.2});
-Avatar.addCtl(\leftLowerArmqz, { SinOsc.kr(0.5) / 4 });
-Avatar.addCtl(\rightUpperArmqx, { SinOsc.kr(0.5) / 4 - 0.2});
-Avatar.addCtl(\rightLowerArmqz, { SinOsc.kr(0.5) / 4 + 0.2});
-Avatar.addCtl(\chestqy, { SinOsc.kr(0.5) / 4 + 0.2 });
-Avatar.addCtl(\chestqx, { SinOsc.kr(0.5) / 4 });
-Avatar.addCtl(\headqx, { SinOsc.kr(0.5) / 4 });
-Avatar.addCtl(\headqy, { SinOsc.kr(0.5) / 4 });
-Avatar.addCtl(\leftHandqy, { SinOsc.kr(0.5) / 4 });
-Avatar.addCtl(\leftHandqz, { SinOsc.kr(0.5) / 4 });
-Avatar.addCtl(\rightHandqy, { SinOsc.kr(0.5) / 4 });
-Avatar.addCtl(\rightHandqz, { SinOsc.kr(0.5) / 4 });
+Avatar.putClt(\hipy, { SinOsc.kr(0.3, 2pi) / 3 + 1.3 });
+Avatar.putClt(\rightLegqx, { SinOsc.kr(0.3) / 4 + 0.1});
+Avatar.putClt(\rightUpLegqx, { SinOsc.kr(0.3) / 4 + 0.1 });
+Avatar.putClt(\rightFootqy, { SinOsc.kr(0.3) / 4 + 0.3});
+Avatar.putClt(\leftLegqx, { SinOsc.kr(0.5) / 4 });
+Avatar.putClt(\leftUpperArmqx, { SinOsc.kr(0.5) / 4 + 0.2});
+Avatar.putClt(\leftLowerArmqz, { SinOsc.kr(0.5) / 4 });
+Avatar.putClt(\rightUpperArmqx, { SinOsc.kr(0.5) / 4 - 0.2});
+Avatar.putClt(\rightLowerArmqz, { SinOsc.kr(0.5) / 4 + 0.2});
+Avatar.putClt(\chestqy, { SinOsc.kr(0.5) / 4 + 0.2 });
+Avatar.putClt(\chestqx, { SinOsc.kr(0.5) / 4 });
+Avatar.putClt(\headqx, { SinOsc.kr(0.5) / 4 });
+Avatar.putClt(\headqy, { SinOsc.kr(0.5) / 4 });
+Avatar.putClt(\leftHandqy, { SinOsc.kr(0.5) / 4 });
+Avatar.putClt(\leftHandqz, { SinOsc.kr(0.5) / 4 });
+Avatar.putClt(\rightHandqy, { SinOsc.kr(0.5) / 4 });
+Avatar.putClt(\rightHandqz, { SinOsc.kr(0.5) / 4 });
 //
 //:Add animation of playback on top of synth-controlled animation
 Avatar.resume;

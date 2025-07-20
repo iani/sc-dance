@@ -39,13 +39,17 @@ AnimationController {
 	makeIO { | parser |
 		var jointNames;
 		ioArray = parser.ctlNames collect: { | n, i |
-			JointIO(n, i + animbus.index, i + ctlbus.index);
+			JointIO(avatar, n, i + animbus.index, i + ctlbus.index);
 		};
 		ioEnvir = Event();
 		ioArray do: { | j | ioEnvir[j.joint] = j; };
 		ioEnvir[\all] = ioArray;
 		jointNames = parser.jointNames;
-		ioArray.clump(7) do: { | a, i | ioEnvir[jointNames[i]] = a; }
+		ioArray.clump(7) do: { | jointArray, i |
+			var jointName, joint;
+			jointName = jointNames[i];
+			ioEnvir[jointName] = Joint(avatar, jointName, jointArray);
+		}
 	}
 
 	play {
@@ -79,12 +83,7 @@ AnimationController {
 		this.removeSynth(key);
 		// postf("Controller addSynth. ioEnvir: %\n", ioEnvir);
 		avatar addSetFilter: key;
-		synths[key] = ioEnvir use: {
-			var thesynth;
-			// "doing synthfunc!".postln;
-			thesynth = synthFunc.play;
-			// postf("The synth is: %\n", thesynth);
-		};
+		synths[key] = ioEnvir use: { synthFunc.play; };
 	}
 
 	removeSynth { | key |

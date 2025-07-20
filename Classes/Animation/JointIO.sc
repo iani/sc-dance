@@ -2,12 +2,12 @@
 // Shortcuts for io to AnimationController's buses
 
 JointIO {
-	var <joint, <>msgBus, <>ctlBus;
+	var <avatar, <joint, <>msgBus, <>ctlBus;
 
-	*new { | joint, msgBus, ctlBus |
-		^this.newCopyArgs(joint, msgBus, ctlBus);
+	*new { | avatar, joint, msgBus, ctlBus |
+		^this.newCopyArgs(avatar, joint, msgBus, ctlBus);
 	}
-
+	name { ^joint } // synonym
 	in { ^this.controlIn }
 	controlIn { ^In.kr(ctlBus) }
 
@@ -20,7 +20,20 @@ JointIO {
 	}
 
 	ain { ^this.avatarIn }
-	avatarIn { ^In.kr(msgBus) }
+	avatarIn { | lo, hi |
+		var src;
+		src = In.kr(msgBus);
+		if (lo.notNil) {
+			^src.linlin(-2, 2, lo, hi);
+		}{
+			^src
+		}
+	}
+
+	// sum of joint variable values
+	jsum { | joint |
+		//		^
+	}
 	aout { | ugens | ^this.avatarOut(ugens) }
 	avatarOut { | ugens | ^Out.kr(msgBus, ugens) }
 }

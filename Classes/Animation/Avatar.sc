@@ -198,6 +198,7 @@ Avatar : NamedInstance {
 	ctlNames { ^this.parser.ctlNames }
 	jointNames { ^this.parser.jointNames }
 	jointIO { | joint | ^controller.jointIO(joint) }
+	ioEnvir { ^this.controller.ioEnvir }
 	filter { ^animator.filter }
 	// Basic filter methods
 	addFilter { | jointName, func | animator.addFilter(jointName, func); }
@@ -211,13 +212,11 @@ Avatar : NamedInstance {
 
 	// Synth filter methods
 	addSynth { | jointName, func |
-		controller.addSynth(jointName, {
-			controller.ioEnvir[jointName].out(func.value)
-		});
+		controller.addSynth(jointName, func);
 	}
 	// Shortcuts:
-	// Better name: addCtl. Other variants: addSumCtl, addMulCtl
-	addCtl { | jointName, func |
+	// Better name: putClt. Other variants: addSumCtl, addMulCtl
+	putClt { | jointName, func |
 		this addSetFilter: jointName;
 		controller.synths[jointName].free;
 		controller.synths[jointName] = {
