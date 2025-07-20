@@ -252,6 +252,16 @@ Avatar : NamedInstance {
 		keys do: { | key | this removeSynth: key };
 	}
 	removeSynth { | key | controller.removeSynth(key) }
+
+	setSynthCtl { | jointName, ctlName, value |
+		var synth = controller.synths[jointName];
+		if (synth.isNil) {
+			postf("Avatar-setSynthCtl: No synth found for joint '%'", jointName);
+		} {
+			synth.set(ctlName, value);
+		};
+	}
+
 	setctl { | key, value | controller.setctl(key, value); }
 	ctloffset { | key | ^this.parser.ctlDict[key] }
 
