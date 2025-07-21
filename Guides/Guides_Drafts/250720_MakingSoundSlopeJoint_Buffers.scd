@@ -23,9 +23,18 @@ Avatar.addSynth(\hipslope, {
 //:make hipslope more sensitive to slope - since hip is less agile than hands
 Avatar.setSynthCtl(\hipslope, \lothresh, 0.4);
 //: more silence
-Avatar.setSynthCtl(\hipslope, \lothresh, 1.0);
-//: less silence
+Avatar.setSynthCtl(\hipslope, \lothresh, 2.0);
+//: almost total silence
+Avatar.setSynthCtl(\hipslope, \lothresh, 3.0);
+//: almost no silence
 Avatar.setSynthCtl(\hipslope, \lothresh, 0.1);
+//:
+//: Test Template class for above
+Avatar.addSynth(\hipslope, {
+	var mul, val;
+	#mul, val = ~hip.slopePhrase(lothresh: 0.5, map1: 0.5, map2: 2);
+	PlayBufTemplate.ar(\namishort, val) * mul * 0.6;
+});
 //:
 
 //: leftUpperArm - using slopePhrase with different mapping

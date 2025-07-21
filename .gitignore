@@ -3,5 +3,4 @@
 *.log
 tmp/
 
-*.pdf
 *.tex
