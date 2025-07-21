@@ -1,11 +1,30 @@
-#+title: sc-dance Library: Readme
+#+title: sc-dance Library: Overview
 #+OPTIONS: toc:nil
 
 * Purpose
+:PROPERTIES:
+:UNNUMBERED: notoc
+:END:
 This is a supercollider library networked live coding for dance and animation.
 The  library plays animations on GODOT. It is recommended to run GODOT on the same computer as SuperCollider and sc-dance.
 
+* Features, Working Principle
+:PROPERTIES:
+:UNNUMBERED: notoc
+:END:
+
+The library sends animation data to GODOT in the form of OSC messages.  It can play back animation sessions recorded /or received live. from various MOCAP sources such as /Rokoko/ suits, /Yolo/ camera based tracking systems, etc. Its main funcitonality and features are:
+
+1. Playback recorded data sessions or stream live MOCAP sessions to GODOT
+2. Synthesize or modify animation data live, based on functions written by the user, or on control Synths played by the user in SuperCollider.
+3. Control sound synthesis based on animation data.
+
+To receive and animate OSC messages from the present library, a Godot project must have the plugins required to receive OSC and to translate OSC messages from the format specific to the MOCAP source (Rokoko, Yolo, etc.).  An example for Rokoko is provided in the present library under folder =./Godot_project/boy_and_birds=.
+
 * Installation, Getting Started
+:PROPERTIES:
+:UNNUMBERED: notoc
+:END:
 To install, clone this repository and place it or link it inside the Extensions directory of your SuperCollider User support directory.
 
 To try out:
@@ -22,6 +41,12 @@ Avatar.load.sendToGodot.play
 #+end_src
 
 * Documentation
+:PROPERTIES:
+:UNNUMBERED: notoc
+:END:
 Documentation is found found in =./Documentation/sc-dance_documentation.pdf=.
 * Example files
+:PROPERTIES:
+:UNNUMBERED: notoc
+:END:
 Code examples are found in =./Guides/=. (Under development).
