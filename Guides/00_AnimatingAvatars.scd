@@ -1,5 +1,5 @@
 //:Preliminary: Show evaluated code in separate sc window:
-OscUser.showCode;
+//:OscUser.showCode;
 //:Load default session to the default Avatar, open data gui, connect to GODOT, play:
 //:Boot servers
 s.boot; // Server must be booted to play Avatar!

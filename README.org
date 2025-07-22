@@ -50,3 +50,6 @@ Documentation is found found in =./Documentation/sc-dance_documentation.pdf=.
 :UNNUMBERED: notoc
 :END:
 Code examples are found in =./Guides/=. (Under development).
+* Example on Youtube
+
+https://www.youtube.com/watch?v=DyLq91JJEwc&ab_channel=IannisZannos

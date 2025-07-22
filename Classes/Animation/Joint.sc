@@ -49,5 +49,4 @@ Joint {
 		mappedSlope = slope.linlin(0, hithreshCtl, map1Ctl, map2Ctl);
 		^[slopePhrase, mappedSlope] ++ rawInputs ++ ampInputs;
 	}
-
 }
