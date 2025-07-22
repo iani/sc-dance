@@ -56,16 +56,13 @@ Avatar : NamedInstance {
 	enableRemote { | argOscAddress = '/rokoko/' |
 		oscAddress = argOscAddress;
 		this.stop; // stop playback from data;
-		OscControl.enable;
-		this.addAdapter(OscControl, oscAddress, { | a, msg |
-			animator filterAndPublish: msg;
-		});
+		this.removeSynths;
+		sessionData calibrateRemote: oscAddress;
 	}
 
 	disableRemote {
 		this.removeAdapter(OscControl, oscAddress);
 	}
-
 
 	*start { this.default.start }
 	*play { this.default.play }
@@ -211,8 +208,8 @@ Avatar : NamedInstance {
 	addMulFilter { | jointName | this.addFilter(jointName, { | m, c | m * c }) }
 
 	// Synth filter methods
-	addSynth { | jointName ... args |
-		controller.addSynth(jointName, *args);
+	addSynth { | jointName, func |
+		controller.addSynth(jointName, func);
 	}
 	// Shortcuts:
 	// Better name: putClt. Other variants: addSumCtl, addMulCtl

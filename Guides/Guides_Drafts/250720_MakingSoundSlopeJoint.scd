@@ -5,24 +5,25 @@ Avatar.load.valuesGui.sendToGodot.play;
 Avatar.jointNames.clump(5) do: _.postln;
 Avatar.jointNames.asCompileString;
 ScDanceAssets.buffers.keys.asArray.sort.asCompileString;
+Avatar.removeSynths;
 //:Do each joint in turn:
 //: leftUpperArm - using slopePhrase with different mapping
 Avatar.addSynth(\hipslope, {
 	var mul, val;
-	#mul, val = ~hip.slopePhrase(map1: 200, map2: 400);
+	#mul, val = ~hip.slopePhrase(map1: 200, map2: 400, lothresh: 0.1);
 	SinOsc.ar(val).dup * mul * 0.1;
 });
 //:
 //: leftUpperArm - using slopePhrase with different mapping
 Avatar.addSynth(\spineslope, {
 	var mul, val;
-	#mul, val = ~spine.slopePhrase(map1: 400, map2: 800);
+	#mul, val = ~spine.slopePhrase(map1: 800, map2: 400, lothresh: 0.1);
 	SinOsc.ar(val).dup * mul * 0.1;
 });
 //: leftUpperArm - using slopePhrase with different mapping
 Avatar.addSynth(\chestslope, {
 	var mul, val;
-	#mul, val = ~chest.slopePhrase(map1: 180, map2: 100);
+	#mul, val = ~chest.slopePhrase(map1: 180, map2: 100,  lothresh: 0.1);
 	SinOsc.ar(val).dup * mul * 0.1;
 });
 //: leftUpperArm - using slopePhrase with different mapping
@@ -34,13 +35,13 @@ Avatar.addSynth(\neckslope, {
 //: leftUpperArm - using slopePhrase with different mapping
 Avatar.addSynth(\headslope, {
 	var mul, val;
-	#mul, val = ~head.slopePhrase(map1: 1200, map2: 1000);
+	#mul, val = ~head.slopePhrase(map1: 1000, map2: 1200);
 	SinOsc.ar(val).dup * mul * 0.1;
 });
 //: leftUpperArm - using slopePhrase with different mapping
 Avatar.addSynth(\leftShoulderslope, {
 	var mul, val;
-	#mul, val = ~leftShoulder.slopePhrase(map1: 200, map2: 1800);
+	#mul, val = ~leftShoulder.slopePhrase(map1: 200, map2: 100);
 	SinOsc.ar(val).dup * mul * 0.1;
 });
 //: leftUpperArm - using slopePhrase with different mapping

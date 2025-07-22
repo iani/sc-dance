@@ -11,6 +11,29 @@ SessionData {
 		^this.newCopyArgs(argPath, argAvatar);
 	}
 
+	// playing data from live session
+	calibrateRemote { | argOscAddress |
+		"Preparing calibration".postln;
+		messages = nil;
+		TraceOsc.enable;
+		avatar.addAdapter(OscControl, argOscAddress, { | a, msg |
+			messages = messages add: msg;
+			this.parser.parse(msg);
+			postf("% of % has parsed message and is ready for activation\n",
+				this, avatar
+			);
+			TraceOsc.disable;
+			avatar.removeAdapter(OscControl, argOscAddress);
+			avatar.addAdapter(OscControl, argOscAddress, { | a, msg |
+				avatar.animator.message = msg;
+			});
+			avatar.controller.play;
+		});
+		OscControl.enable;
+	}
+
+
+	// playing data from file
 	load { | argPath |
 		// postf("Debugging SessionData.load. Path is:\n%\n", argPath);
 		folderPath = argPath;

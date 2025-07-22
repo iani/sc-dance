@@ -8,6 +8,7 @@ OscUser : NamedInstance {
 		};
 	}
 
+	showCode { this.makeWindow }
 	makeWindow {
 		Windows.makeWindow(this, \mainWindow, { | w |
 			var codeView;
