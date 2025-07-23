@@ -3,6 +3,8 @@
 //: Load, connect to GODOT and start animation
 Avatar.enableRemote.valuesGui.sendToGodot.play;
 Avatar.removeSynths;
+//: Record sound to disc
+Server.default.record;
 //:Do each joint in turn:
 //: leftUpperArm - using slopePhrase with different mapping
 Avatar.addSynth(\hipslope, {
@@ -41,8 +43,12 @@ Avatar.addSynth(\leftShoulderslope, {
 	#mul, val = ~leftShoulder.slopePhrase(map1: 1200, map2: 2100, lothresh: 0.3);
 	SinOsc.ar(val).dup * mul * 0.05;
 });
-//
+//:
+
+Avatar.removeSynth(\hipslope);
+Avatar.removeSynth(\spineslope);
+Avatar.removeSynth(\chestslope);
 Avatar.removeSynth(\leftShoulderslope);
 Avatar.removeSynth(\headslope);
 Avatar.removeSynth(\neckslope);
-Avatar.addSynth(\rightHandslope,
+Avatar.removeSynth(\leftShoulderslope);

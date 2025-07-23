@@ -5,6 +5,7 @@ Avatar.enableRemote.valuesGui.sendToGodot.play;
 Avatar.removeSynths;
 //:Do each joint in turn:
 //: leftUpperArm - using slopePhrase with different mapping
+Server.default.record;
 
 //:
 //: leftUpperArm - using slopePhrase with different mapping
@@ -92,3 +93,16 @@ Avatar.addSynth(\rightHandslope, {
 	PlayBuf.ar(1, \hanbaiki.buffer, BufRateScale.kr(\hanbaiki.buffer) * val,
 		1, 0, 1) * mul.lag(2) * 0.1;
 });
+//:
+Avatar.removeSynth(\rightHandslope);
+Avatar.removeSynth(\leftHandslope);
+Avatar.removeSynth(\rightLowerArmslope);
+Avatar.removeSynth(\hipslope);
+Avatar.removeSynth(\headslope);
+Avatar.removeSynth(\neckslope);
+
+Avatar.removeSynth(\chestsclope);
+
+Avatar.removeSynths;
+
+Server.default.stopRecording;

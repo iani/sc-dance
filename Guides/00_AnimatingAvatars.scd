@@ -1,5 +1,5 @@
 //:Preliminary: Show evaluated code in separate sc window:
-//:OscUser.showCode;
+OscUser.showCode;
 //:Load default session to the default Avatar, open data gui, connect to GODOT, play:
 //:Boot servers
 s.boot; // Server must be booted to play Avatar!
@@ -19,7 +19,7 @@ Avatar.removeFilter(\hipy);
 //:Synth functions as filters
 //Add synth filter
 
-Avatar.addSynth(\hipy, { ~hipy.out(SinOsc.kr(0.3) / 3 + 1.25 )});
+Avatar.addSynth(\hipy, { ~hipy.out(SinOsc.kr(0.3) / 3 + 1.3 )});
 
 //:stop the filter synth:
 Avatar.removeSynth(\hipy);
@@ -52,4 +52,3 @@ Avatar.resume;
 Avatar.removeSynths;
 //: Stop animation
 Avatar.stop;
-//:
