@@ -49,7 +49,19 @@ Documentation is found found in =./Documentation/sc-dance_documentation.pdf=.
 :PROPERTIES:
 :UNNUMBERED: notoc
 :END:
-Code examples are found in =./Guides/=. (Under development).
-* Example on Youtube
 
+Code examples are found in folder =./Guides/=
+
+* Examples on Youtube
+:PROPERTIES:
+:UNNUMBERED: notoc
+:END:
+
+- Start the example project on GODOT, play an example session, control joints via functions or synths:
 https://www.youtube.com/watch?v=DyLq91JJEwc&ab_channel=IannisZannos
+
+- Combine animation control from live source (Rokoko MOCAP) and SuperCollider
+https://youtu.be/EisTZnWffr0
+
+- Control sound synthesis from live animation data (Rokoko MOCAAP)
+https://youtu.be/Tko5_decPqo

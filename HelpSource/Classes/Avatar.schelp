@@ -1,0 +1,558 @@
+TITLE:: Avatar
+summary:: Avatar
+categories:: sc-dance, animation
+related:: Classes/NamedInstance, Classes/AnimationController, Classes/Animator, Classes/SessionData, Reference/Animation.
+​
+DESCRIPTION::
+
+​
+CLASSMETHODS::
+​
+METHOD:: stop
+Stop the task playing animation inside Avatar's code::animator:: and the task polling control bus values inside this Animator's code::animator::.
+
+If an animation is currently being played by this Animators code::animator::, then it stops.
+Furthermore, control values are no longer polled by the code::animator::.
+
+returns: The receiver Avatar instance.
+​
+METHOD:: allSessionNames
+Return the names of all folders containing OSC data of recorded animation sessions.
+​
+returns:: An array of session names as symbols.
+​
+METHOD:: reset
+
+​
+returns:: The receiver Avatar instance.
+​
+METHOD:: play
+(describe method here)
+​
+returns:: The receiver Avatar instance.
+​
+METHOD:: pause
+(describe method here)
+​
+returns:: The receiver Avatar instance.
+​
+METHOD:: resume
+(describe method here)
+​
+returns:: The receiver Avatar instance.
+​
+METHOD:: isPlaying
+(describe method here)
+​
+returns:: true if the Avatar is playing, false otherwise.
+​
+METHOD:: localGodotAddr
+(describe method here)
+​
+returns:: The NetAddr of the local Godot application.
+​
+METHOD:: sessionGui
+(describe method here)
+​
+returns:: The receiver Avatar instance.
+​
+METHOD:: start
+(describe method here)
+​
+returns:: The receiver Avatar instance.
+​
+​
+INSTANCEMETHODS::
+​
+METHOD:: pause
+(describe method here)
+​
+returns:: The receiver Avatar instance.
+​
+METHOD:: jointIO
+(describe method here)
+​
+ARGUMENT:: joint
+(describe argument here)
+​
+returns:: The JointIO instance corresponding to code:joint::..
+​
+METHOD:: addLocalGodot
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: sendToGodot
+(describe method here)
+​
+ARGUMENT:: flag
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: setSynthCtl
+(describe method here)
+​
+ARGUMENT:: jointName
+(describe argument here)
+​
+ARGUMENT:: ctlName
+(describe argument here)
+​
+ARGUMENT:: value
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: setctl
+(describe method here)
+​
+ARGUMENT:: key
+(describe argument here)
+​
+ARGUMENT:: value
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: addFilter
+(describe method here)
+​
+ARGUMENT:: jointName
+(describe argument here)
+​
+ARGUMENT:: func
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: init
+(describe method here)
+​
+ARGUMENT:: argSessionPath
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: publishValueArray
+(describe method here)
+​
+ARGUMENT:: publishMsg
+(describe argument here)
+​
+ARGUMENT:: argMsg
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: load
+(describe method here)
+​
+ARGUMENT:: path
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: removeSynth
+(describe method here)
+​
+ARGUMENT:: key
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: getFilter
+(describe method here)
+​
+ARGUMENT:: joint
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: valuesGui
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: ctlNames
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: removeFilter
+(describe method here)
+​
+ARGUMENT:: joint
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: addMulFilter
+(describe method here)
+​
+ARGUMENT:: jointName
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: props
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: parser
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: start
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: isPlaying
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: ctloffset
+(describe method here)
+​
+ARGUMENT:: key
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: controller
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: setType
+(describe method here)
+​
+ARGUMENT:: argType
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: ioEnvir
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: disableRemote
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: putClt
+(describe method here)
+​
+ARGUMENT:: jointName
+(describe argument here)
+​
+ARGUMENT:: func
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: addReceiver
+(describe method here)
+​
+ARGUMENT:: netAddr
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: localGodot
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: sessionPath
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: loadNamed
+(describe method here)
+​
+ARGUMENT:: sessionName
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: deleteReceiver
+(describe method here)
+​
+ARGUMENT:: netAddr
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: messages
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: setRot
+(describe method here)
+​
+ARGUMENT:: argqx
+(describe argument here)
+​
+ARGUMENT:: argqy
+(describe argument here)
+​
+ARGUMENT:: argqz
+(describe argument here)
+​
+ARGUMENT:: argqw
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: messageSize
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: filter
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: removeCtl
+(describe method here)
+​
+ARGUMENT:: jointName
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: loadDialog
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: sessionData
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: ctlIndex
+(describe method here)
+​
+ARGUMENT:: joint
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: addLocalSC
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: enableRemote
+(describe method here)
+​
+ARGUMENT:: argOscAddress
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: filterMessage
+(describe method here)
+​
+ARGUMENT:: message
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: sendToSelf
+(describe method here)
+​
+ARGUMENT:: flag
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: setColor
+(describe method here)
+​
+ARGUMENT:: argr
+(describe argument here)
+​
+ARGUMENT:: argg
+(describe argument here)
+​
+ARGUMENT:: argb
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: setPos
+(describe method here)
+​
+ARGUMENT:: argx
+(describe argument here)
+​
+ARGUMENT:: argy
+(describe argument here)
+​
+ARGUMENT:: argz
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: removeFilters
+(describe method here)
+​
+ARGUMENT::  ... names
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: reset
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: addSynth
+(describe method here)
+​
+ARGUMENT:: jointName
+(describe argument here)
+​
+ARGUMENT:: func
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: jointNames
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: addAddFilter
+(describe method here)
+​
+ARGUMENT:: jointName
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: resume
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: stop
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: removeSynths
+(describe method here)
+​
+ARGUMENT::  ... keys
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: addSetFilter
+(describe method here)
+​
+ARGUMENT:: jointName
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: play
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: setPosRot
+(describe method here)
+​
+ARGUMENT:: argx
+(describe argument here)
+​
+ARGUMENT:: argy
+(describe argument here)
+​
+ARGUMENT:: argz
+(describe argument here)
+​
+ARGUMENT:: argqx
+(describe argument here)
+​
+ARGUMENT:: argqy
+(describe argument here)
+​
+ARGUMENT:: argqz
+(describe argument here)
+​
+ARGUMENT:: argqw
+(describe argument here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: ctlvalues
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: animator
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: deleteLocalSC
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: oscAddress
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: msgStream
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: timeStream
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+METHOD:: deleteLocalGodot
+(describe method here)
+​
+returns:: (describe returnvalue here)
+​
+​
+EXAMPLES::
+​
+code::
+s.boot; // Server must be booted to play Avatar!
+// load the default session,  connect to GODOT, show gui, start playing the session
+// in the default Avatar:
+Avatar.load.valuesGui.sendToGodot.play;
+::
+
+​code::
+Avatar.pause;  // pause playing session data
+::
+
+​code::
+Avatar.resume;  // resume playing session data
+::
+
+​code::
+Avatar.stop;  // stop current session if  playing
+::

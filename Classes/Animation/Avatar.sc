@@ -46,6 +46,7 @@ Avatar : NamedInstance {
 
 	init { | argSessionPath |
 		// this.simpleTrace;
+		if(name === \default) { name = OscUser.localUserId };
 		sessionData = SessionData(argSessionPath, this);
 		animator = Animator(this);
 		controller = AnimationController().init(this);
