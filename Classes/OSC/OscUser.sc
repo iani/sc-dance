@@ -4,12 +4,12 @@ OscUser : NamedInstance {
 	*localUser { ^this.default }
 	init {
 		if (name === \default) {
-			name = this.localUserID;
+			name = this.localUserId;
 		};
 	}
 
-	localUserID { ^this.class.localUserID }
-	*localUserID {
+	localUserId { ^this.class.localUserId }
+	*localUserId {
 		^ Platform.userHomeDir.fileName.asSymbol;
 	}
 

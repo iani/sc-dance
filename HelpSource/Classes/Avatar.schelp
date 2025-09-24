@@ -556,3 +556,7 @@ Avatar.resume;  // resume playing session data
 ​code::
 Avatar.stop;  // stop current session if  playing
 ::
+
+​code::
+Avatar.addReceiver e;  // stop current session if  playing
+::

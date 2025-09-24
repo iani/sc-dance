@@ -1,10 +1,9 @@
 // 月 21  7 2025 19:18
 
+Server.default.record;
 //: Load, connect to GODOT and start animation
 Avatar.enableRemote.valuesGui.sendToGodot.play;
 Avatar.removeSynths;
-//: Record sound to disc
-Server.default.record;
 //:Do each joint in turn:
 //: leftUpperArm - using slopePhrase with different mapping
 Avatar.addSynth(\hipslope, {

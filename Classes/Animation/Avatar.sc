@@ -45,8 +45,12 @@ Avatar : NamedInstance {
 	}
 
 	init { | argSessionPath |
+		"initing avatar".postln;
 		// this.simpleTrace;
-		if(name === \default) { name = OscUser.localUserId };
+		if(name === \default) {
+			// "debug osc user local user id".postln;
+				name = OscUser.localUserId;
+		};
 		sessionData = SessionData(argSessionPath, this);
 		animator = Animator(this);
 		controller = AnimationController().init(this);
