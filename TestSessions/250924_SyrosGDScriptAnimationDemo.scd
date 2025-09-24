@@ -11,4 +11,4 @@ Avatar.default.play;
 //: Test sending to local godot session
 Avatar.sendToGodot;
 //: Send to remote Godot session
-Avatar addReceiver: NetAddr("", 22245);
+Avatar addReceiver: NetAddr("192.168.12.147", 22245);

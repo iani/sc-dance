@@ -7,6 +7,7 @@ AvatarAssets : PathBookmark {
 	var >defaultPath;
 
 	*allSessionNames { ^this.allSessionsDict.keys.asArray.sort;}
+	*sessionNamed { | sessionName | ^this.allSessionsDict[sessionName] }
 	*allSessionsDict {
 		var dict;
 		this.subclasses.do({|s| s.default});
@@ -23,7 +24,7 @@ AvatarAssets : PathBookmark {
 		Windows.makeWindow(this, \gui, { | w |
 			var widgets;
 			w.name = "Rokoko Sessions";
-			widgets = NamedInstance.allSubclassInatancesOf(this) collect: _.sessionListView;
+			widgets = NamedInstance.allSubclassInstancesOf(this) collect: _.sessionListView;
 			widgets = widgets add: StaticText().string_("Press enter to load session in Avatar.default");
 			w.view.layout = VLayout(*widgets.flat);
 			w.front;

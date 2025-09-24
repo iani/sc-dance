@@ -104,7 +104,7 @@ Avatar : NamedInstance {
 		animator.reset;
 	}
 	loadNamed { | sessionName |
-		this load: RokokoSessionsBookmark.allSessionsDict[sessionName]
+		this load: AvatarAssets.sessionNamed(sessionName);
 	}
 
 	loadDialog {
