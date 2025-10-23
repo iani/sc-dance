@@ -28,23 +28,23 @@ Avatar.removeSynth(\hipy);
 //: Pause animation playback, to see control by synths only:
 Avatar.pause;
 //: Add controls one-by-one (run one line at a time).
-Avatar.putClt(\hipy, { SinOsc.kr(0.3, 2pi) / 3 + 1.3 });
-Avatar.putClt(\rightLegqx, { SinOsc.kr(0.3) / 4 + 0.1});
-Avatar.putClt(\rightUpLegqx, { SinOsc.kr(0.3) / 4 + 0.1 });
-Avatar.putClt(\rightFootqy, { SinOsc.kr(0.3) / 4 + 0.3});
-Avatar.putClt(\leftLegqx, { SinOsc.kr(0.5) / 4 });
-Avatar.putClt(\leftUpperArmqx, { SinOsc.kr(0.5) / 4 + 0.2});
-Avatar.putClt(\leftLowerArmqz, { SinOsc.kr(0.5) / 4 });
-Avatar.putClt(\rightUpperArmqx, { SinOsc.kr(0.5) / 4 - 0.2});
-Avatar.putClt(\rightLowerArmqz, { SinOsc.kr(0.5) / 4 + 0.2});
-Avatar.putClt(\chestqy, { SinOsc.kr(0.5) / 4 + 0.2 });
-Avatar.putClt(\chestqx, { SinOsc.kr(0.5) / 4 });
-Avatar.putClt(\headqx, { SinOsc.kr(0.5) / 4 });
-Avatar.putClt(\headqy, { SinOsc.kr(0.5) / 4 });
-Avatar.putClt(\leftHandqy, { SinOsc.kr(0.5) / 4 });
-Avatar.putClt(\leftHandqz, { SinOsc.kr(0.5) / 4 });
-Avatar.putClt(\rightHandqy, { SinOsc.kr(0.5) / 4 });
-Avatar.putClt(\rightHandqz, { SinOsc.kr(0.5) / 4 });
+Avatar.putCtl(\hipy, { SinOsc.kr(0.3, 2pi) / 3 + 1.3 });
+Avatar.putCtl(\rightLegqx, { SinOsc.kr(0.3) / 4 + 0.1});
+Avatar.putCtl(\rightUpLegqx, { SinOsc.kr(0.3) / 4 + 0.1 });
+Avatar.putCtl(\rightFootqy, { SinOsc.kr(0.3) / 4 + 0.3});
+Avatar.putCtl(\leftLegqx, { SinOsc.kr(0.5) / 4 });
+Avatar.putCtl(\leftUpperArmqx, { SinOsc.kr(0.5) / 4 + 0.2});
+Avatar.putCtl(\leftLowerArmqz, { SinOsc.kr(0.5) / 4 });
+Avatar.putCtl(\rightUpperArmqx, { SinOsc.kr(0.5) / 4 - 0.2});
+Avatar.putCtl(\rightLowerArmqz, { SinOsc.kr(0.5) / 4 + 0.2});
+Avatar.putCtl(\chestqy, { SinOsc.kr(0.5) / 4 + 0.2 });
+Avatar.putCtl(\chestqx, { SinOsc.kr(0.5) / 4 });
+Avatar.putCtl(\headqx, { SinOsc.kr(0.5) / 4 });
+Avatar.putCtl(\headqy, { SinOsc.kr(0.5) / 4 });
+Avatar.putCtl(\leftHandqy, { SinOsc.kr(0.5) / 4 });
+Avatar.putCtl(\leftHandqz, { SinOsc.kr(0.5) / 4 });
+Avatar.putCtl(\rightHandqy, { SinOsc.kr(0.5) / 4 });
+Avatar.putCtl(\rightHandqz, { SinOsc.kr(0.5) / 4 });
 //
 //:Add animation of playback on top of synth-controlled animation
 Avatar.resume;

@@ -246,7 +246,7 @@ METHOD:: disableRemote
 ​
 returns:: (describe returnvalue here)
 ​
-METHOD:: putClt
+METHOD:: putCtl
 (describe method here)
 ​
 ARGUMENT:: jointName

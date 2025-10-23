@@ -3,6 +3,7 @@
 Avatar.valuesGui;
 Avatar.sendToGodot;
 Avatar.play;
+Avatar.stop;
 //:
 //: leftUpperArm - using slopePhrase with different mapping
 Avatar.addSynth(\leftShoulderslope, {

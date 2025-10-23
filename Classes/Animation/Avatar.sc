@@ -217,8 +217,8 @@ Avatar : NamedInstance {
 		controller.addSynth(jointName, func);
 	}
 	// Shortcuts:
-	// Better name: putClt. Other variants: addSumCtl, addMulCtl
-	putClt { | jointName, func |
+	// Better name: putCtl. Other variants: addSumCtl, addMulCtl
+	putCtl { | jointName, func |
 		this addSetFilter: jointName;
 		controller.synths[jointName].free;
 		controller.synths[jointName] = {

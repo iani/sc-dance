@@ -4,7 +4,12 @@
 
 Avatar.valuesGui;
 Avatar.sendToGodot;
+
 Avatar.play;
+//: Send to remote Godot session
+Avatar addReceiver: NetAddr("192.168.12.147", 22245);
+//:stop
+Avatar.stop;
 
 Avatar.removeSynths;
 //:Do each joint in turn:
@@ -23,7 +28,8 @@ Avatar.addSynth(\spineslope, {
 });
 //: leftUpperArm - using slopePhrase with different mapping
 Avatar.addSynth(\chestslope, {
-	var mul, val;
+	var mul, valDistributed Live Coding
+;
 	#mul, val = ~chest.slopePhrase(map1: 180, map2: 100,  lothresh: 0.4);
 	SinOsc.ar(val).dup * mul * 0.05;
 });
